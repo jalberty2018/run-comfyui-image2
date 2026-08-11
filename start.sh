@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "▶️ Pod run-comfyui-image started"
+echo "▶️ Pod run-comfyui-image2 started"
 echo "ℹ️ Wait until the message 🎉 Provisioning done, ready to create AI content 🎉 is displayed"
 
 # Hugging Face CLI output tuned for RunPod plain logs.
@@ -7,7 +7,7 @@ export NO_COLOR=1
 export HF_HUB_VERBOSITY=warning
 export HF_HUB_DISABLE_PROGRESS_BARS=0
 export HF_HUB_DISABLE_UPDATE_CHECK=1
-export HF_DOWNLOAD_TIMEOUT="${HF_DOWNLOAD_TIMEOUT:-5m}"
+export HF_DOWNLOAD_TIMEOUT="${HF_DOWNLOAD_TIMEOUT:-10m}"
 
 # Enable SSH if PUBLIC_KEY is set
 if [[ -n "$PUBLIC_KEY" ]]; then
@@ -31,7 +31,7 @@ fi
 mkdir -p /workspace/output/
 
 # Set optimizations
-export PYTORCH_ALLOC_CONF=expandable_segments:True,garbage_collection_threshold:0.8
+# export PYTORCH_ALLOC_CONF=expandable_segments:True,garbage_collection_threshold:0.8
 
 # GPU detection
 echo "ℹ️ Testing GPU/CUDA provisioning"
@@ -163,9 +163,9 @@ fi
 # Start ComfyUI (HTTP port 8188)
 HAS_COMFYUI=0
 
-if [[ "$HAS_CUDA" -eq 1 ]]; then 
-	
-	SETTINGS_DIR="/workspace/ComfyUI/custom_nodes/ComfyUI-Lora-Manager"
+if [[ "$HAS_CUDA" -eq 1 ]]; then
+
+    SETTINGS_DIR="/workspace/ComfyUI/custom_nodes/ComfyUI-Lora-Manager"
 	SETTINGS_FILE="$SETTINGS_DIR/settings.json"
 	TEMPLATE_FILE="$SETTINGS_DIR/settings.json.template"
 	
@@ -181,14 +181,14 @@ if [[ "$HAS_CUDA" -eq 1 ]]; then
 	    echo "⚠️ CIVITAI_TOKEN not set – Insert your token manually in ComfyUI-Lora-Manager"
 	fi
 	
-	echo "▶️ ComfyUI service starting (CUDA available)"
+    echo "▶️ ComfyUI service starting (CUDA available)"
 	    
-    python3 /workspace/ComfyUI/main.py ${COMFYUI_EXTRA_ARGUMENTS:---listen --enable-manager --preview-method auto} &
+    python3 /workspace/ComfyUI/main.py ${COMFYUI_EXTRA_ARGUMENTS:---listen --enable-manager --preview-method latent2rgb} &
 
     # Wait until ComfyUI is ready
     MAX_TRIES="${COMFYUI_START_MAX_TRIES:-60}"
     COUNT=0
-	
+
     until curl -s http://127.0.0.1:8188 > /dev/null; do
         COUNT=$((COUNT+1))
 
@@ -265,31 +265,73 @@ show_code_server_login() {
     fi
 }
 
-# Provisioning routines (with watchdog)
+# Provisioning routines
 
 run_hf_download() {
     local stall_timeout="${HF_DOWNLOAD_STALL_TIMEOUT:-300}"
     local kill_after="${HF_DOWNLOAD_KILL_AFTER:-30}"
     local hf_command
+    local hf_dry_run_command
+    local dry_run_output
+    local total_size_value
+    local total_size_unit
+    local total_bytes=0
     local tmp_dir
     local fifo
     local pid
     local watchdog_pid
+    local progress_pid
     local last_activity_file
     local activity_tmp_file
+    local progress_activity_tmp_file
     local exit_code
     local fallback=0
+    local download_dir=""
+    local -a download_args=("$@")
+    local arg_index
+
+    for ((arg_index = 0; arg_index < ${#download_args[@]}; arg_index++)); do
+        if [[ "${download_args[arg_index]}" == "--local-dir" ]] \
+           && (( arg_index + 1 < ${#download_args[@]} )); then
+            download_dir="${download_args[arg_index + 1]}"
+            break
+        fi
+    done
 
     echo "ℹ️ [DOWNLOAD] Stall watchdog: ${stall_timeout}s"
     echo "ℹ️ [DOWNLOAD] Kill grace period: ${kill_after}s"
 
     # Safely quote all arguments passed to: hf download
-    printf -v hf_command '%q ' hf download "$@"
+    # Force human output so progress bars remain enabled when the command is
+    # captured through the pseudo-terminal and FIFO below.
+    printf -v hf_command '%q ' hf download --format human "$@"
+
+    # Ask the Hub for the selected file size before starting. The dry run uses
+    # the same repository, file filters, authentication and destination as the
+    # real download, but does not transfer the model itself.
+    printf -v hf_dry_run_command '%q ' hf download --dry-run --format human "$@"
+    dry_run_output="$(eval "$hf_dry_run_command" 2>&1 || true)"
+    if [[ "$dry_run_output" =~ totalling[[:space:]]+([0-9]+([.][0-9]+)?)([KMGTPE]?) ]]; then
+        total_size_value="${BASH_REMATCH[1]}"
+        total_size_unit="${BASH_REMATCH[3]}"
+        total_bytes="$(awk -v value="$total_size_value" -v unit="$total_size_unit" '
+            BEGIN {
+                exponent = index("KMGTPE", unit)
+                multiplier = 1
+                for (i = 0; i < exponent; i++) multiplier *= 1000
+                printf "%.0f", value * multiplier
+            }
+        ')"
+        printf 'ℹ️ [DOWNLOAD] Total size: %.2f GB\n' "$(awk -v bytes="$total_bytes" 'BEGIN { print bytes / 1000000000 }')"
+    else
+        echo "⚠️ [DOWNLOAD] Total size could not be determined; continuing download."
+    fi
 
     tmp_dir="$(mktemp -d)"
     fifo="${tmp_dir}/hf-output.fifo"
     last_activity_file="${tmp_dir}/last_activity"
     activity_tmp_file="${tmp_dir}/last_activity.tmp"
+    progress_activity_tmp_file="${tmp_dir}/last_activity.progress.tmp"
 
     mkfifo "$fifo"
     # Write to a separate file first so the watchdog can never observe a
@@ -299,6 +341,7 @@ run_hf_download() {
 
     cleanup() {
         [[ -n "${watchdog_pid:-}" ]] && kill "$watchdog_pid" 2>/dev/null || true
+        [[ -n "${progress_pid:-}" ]] && kill "$progress_pid" 2>/dev/null || true
         [[ -n "${pid:-}" ]] && kill "$pid" 2>/dev/null || true
         rm -rf "$tmp_dir"
     }
@@ -321,6 +364,62 @@ run_hf_download() {
         ) >"$fifo" 2>&1 &
 
         pid=$!
+
+        # Xet does not always emit its own progress bar when its output is
+        # captured. Report growth of the local download directory instead.
+        # Only actual byte growth refreshes the stall watchdog.
+        if [[ -n "$download_dir" ]]; then
+            (
+                local baseline_bytes
+                local previous_bytes
+                local current_bytes
+                local downloaded_bytes
+                local downloaded_gb
+                local speed_mbps
+                local previous_sample_time
+                local current_sample_time
+                local elapsed_seconds
+                local interval_bytes
+
+                baseline_bytes="$(du -s -B1 "$download_dir" 2>/dev/null | awk '{print $1}')"
+                baseline_bytes="${baseline_bytes:-0}"
+                previous_bytes="$baseline_bytes"
+                previous_sample_time="$(date +%s)"
+
+                while kill -0 "$pid" 2>/dev/null; do
+                    sleep 10
+                    current_bytes="$(du -s -B1 "$download_dir" 2>/dev/null | awk '{print $1}')"
+                    current_bytes="${current_bytes:-0}"
+                    current_sample_time="$(date +%s)"
+
+                    if (( current_bytes > previous_bytes )); then
+                        downloaded_bytes=$((current_bytes - baseline_bytes))
+                        interval_bytes=$((current_bytes - previous_bytes))
+                        elapsed_seconds=$((current_sample_time - previous_sample_time))
+                        (( elapsed_seconds < 1 )) && elapsed_seconds=1
+                        downloaded_gb="$(awk -v bytes="$downloaded_bytes" 'BEGIN { printf "%.2f", bytes / 1000000000 }')"
+                        speed_mbps="$(awk -v bytes="$interval_bytes" -v seconds="$elapsed_seconds" 'BEGIN { printf "%.1f", bytes / seconds / 1000000 }')"
+                        if (( total_bytes > 0 )); then
+                            printf '⬇️ [DOWNLOAD] Progress: %s / %.2f GB | %s MB/s\n' \
+                                "$downloaded_gb" \
+                                "$(awk -v bytes="$total_bytes" 'BEGIN { print bytes / 1000000000 }')" \
+                                "$speed_mbps"
+                        else
+                            printf '⬇️ [DOWNLOAD] Progress: %s GB downloaded | %s MB/s\n' \
+                                "$downloaded_gb" "$speed_mbps"
+                        fi
+                        date +%s > "$progress_activity_tmp_file"
+                        mv -f "$progress_activity_tmp_file" "$last_activity_file"
+                    else
+                        echo "ℹ️ [DOWNLOAD] Waiting for transfer progress..."
+                    fi
+
+                    previous_bytes="$current_bytes"
+                    previous_sample_time="$current_sample_time"
+                done
+            ) &
+            progress_pid=$!
+        fi
 
         #
         # Watchdog:
@@ -388,9 +487,12 @@ run_hf_download() {
 
         kill "$watchdog_pid" 2>/dev/null || true
         wait "$watchdog_pid" 2>/dev/null || true
+        [[ -n "${progress_pid:-}" ]] && kill "$progress_pid" 2>/dev/null || true
+        [[ -n "${progress_pid:-}" ]] && wait "$progress_pid" 2>/dev/null || true
 
         pid=""
         watchdog_pid=""
+        progress_pid=""
 
         return "$exit_code"
     }
@@ -434,6 +536,14 @@ download_model_HF() {
     local model="${!model_var}"
     local file="${!file_var}"
     local target="/workspace/ComfyUI/models/$dest_dir"
+
+    # hf preserves repository-relative paths below --local-dir. When the
+    # requested file already starts with its ComfyUI model directory, download
+    # from the models root to avoid paths such as
+    # models/diffusion_models/diffusion_models/<file>.
+    if [[ "$file" == "$dest_dir/"* ]]; then
+        target="/workspace/ComfyUI/models"
+    fi
     mkdir -p "$target"
 
     echo "ℹ️ [DOWNLOAD] Fetching $model + $file → $target"
@@ -636,7 +746,6 @@ download_media() {
 
 # Provisioning if comfyUI is responding running on GPU with CUDA
 if [[ "$HAS_COMFYUI" -eq 1 ]]; then  
-    
     show_runpod_services
     show_code_server_login
 
@@ -674,15 +783,16 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
     }
 
     MAX_VRAM_GIB="$(get_max_vram_gib)"
-    VRAM_THRESHOLD="${VRAM_THRESHOLD:-38}"
+    VRAM_THRESHOLD="${VRAM_THRESHOLD:-36}"
+    VRAM_TRESHHOLD_BLACKWELL="${VRAM_TRESHHOLD_BLACKWELL:-40}"
 
     if (( MAX_VRAM_GIB > VRAM_THRESHOLD )); then
         HF_PREFIX="HF_MODEL_HVRAM_"
-        echo "🟢 High VRAM detected (${MAX_VRAM_GIB} GB > ${VRAM_THRESHOLD} GB)"
+        echo "🟢 High VRAM detected (${MAX_VRAM_GIB} GB > ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
         export COMFYUI_VRAM_MODE=HIGH_VRAM
     else
        HF_PREFIX="HF_MODEL_LVRAM_"
-       echo "🟡 Low VRAM detected (${MAX_VRAM_GIB} GB < ${VRAM_THRESHOLD} GB)"
+       echo "🟡 Low VRAM detected (${MAX_VRAM_GIB} GB <= ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
     fi
 
     has_numbered_model_pair() {
@@ -709,13 +819,13 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
     # when at least one complete model/filename pair has been configured.
     # Otherwise the generic variables are the fallback for that category.
     if [[ "$HAS_GPU_BLACKWELL" -eq 1 ]]; then
-      if [[ "$HF_PREFIX" == "HF_MODEL_HVRAM_" ]]; then
+      if (( MAX_VRAM_GIB > VRAM_TRESHHOLD_BLACKWELL )); then
         BLACKWELL_VRAM_PREFIX="HF_MODEL_HVRAM_BLACKWELL_"
+        echo "⚫ Blackwell high-VRAM models enabled (${MAX_VRAM_GIB} GB > ${VRAM_TRESHHOLD_BLACKWELL} GB)"
       else
         BLACKWELL_VRAM_PREFIX="HF_MODEL_LVRAM_BLACKWELL_"
+        echo "⚫ Blackwell low-VRAM models enabled (${MAX_VRAM_GIB} GB <= ${VRAM_TRESHHOLD_BLACKWELL} GB)"
       fi
-
-      echo "⚫ Blackwell-specific models enabled"
 
       for cat in "${CATEGORIES_HF[@]}"; do
         IFS=":" read -r NAME SUFFIX DIR <<< "$cat"
@@ -750,7 +860,6 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
         echo "ℹ️ No ${BLACKWELL_VRAM_PREFIX}${NAME} models configured; using ${HF_PREFIX}${NAME}"
       fi
-
       for i in $(seq 1 20); do
         VAR_MODEL="${HF_PREFIX}${NAME}${i}"
         VAR_FILE="${HF_PREFIX}${SUFFIX}${i}"
@@ -771,7 +880,6 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
         echo "ℹ️ No HF_MODEL_BLACKWELL_${NAME} models configured; using HF_MODEL_${NAME}"
       fi
-
       for i in $(seq 1 20); do
         VAR1="HF_MODEL_${NAME}${i}"
         VAR2="HF_MODEL_${SUFFIX}${i}"
@@ -796,12 +904,11 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
         INCLUDE_VAR="HF_FULL_MODEL_INCLUDE${i}"
         EXCLUDE_VAR="HF_FULL_MODEL_EXCLUDE${i}"
         download_generic_HF "${VAR1}" "" "${!DIR_VAR}" "${INCLUDE_VAR}" "${EXCLUDE_VAR}"
-    done  
-	
+    done
     echo "📥 Provisioning workflows"
 
     # provisioning workflows VRAM dependent
-    if (( MAX_VRAM_GIB > 40 )); then
+    if (( MAX_VRAM_GIB > VRAM_TRESHHOLD )); then
        WORKFLOW_PREFIX="WORKFLOW_HVRAM"
     else
        WORKFLOW_PREFIX="WORKFLOW_LVRAM"
@@ -832,7 +939,7 @@ else
     echo "⚠️ Skipped Provisioning: No workflows or models downloaded as ComfyUI is not online"
 fi
 
-echo "ℹ️ Connections and/or diagnostics"
+echo "ℹ️ Connections and/or diagnostic information"
 
 if [[ "$HAS_PROVISIONING" -eq 1 ]]; then
     echo "🎉 Provisioning done, ready to create AI content 🎉"
@@ -848,7 +955,7 @@ else
     if [[ "$HAS_CUDA" -eq 0 ]]; then
         echo "❌ Pytorch CUDA driver error/mismatch/not available"
         if [[ "$HAS_GPU_RUNPOD" -eq 1 ]]; then
-            echo "⚠️ [SOLUTION 1] Deploy pod on another region then ${RUNPOD_DC_ID:-unknown} ⚠️"
+            echo "⚠️ [SOLUTION 1] Deploy pod on another region then $RUNPOD_DC_ID. ⚠️"
 			echo "⚠️ [SOLUTION 2] Specify CUDA 12.8 using the runpod console filter. ⚠️"
         fi
     fi
@@ -860,7 +967,7 @@ else
     fi
 fi
 
-echo "📘 Tutorial: https://comfyui.rozenlaan.site/ComfyUI_image_tutorial/"
+echo "📘 Tutorial: https://comfyui.rozenlaan.site/ComfyUI_tutorial/"
 
 # Environment
 echo "ℹ️ Running environment"
@@ -920,20 +1027,6 @@ else:
     print("ONNX Runtime: not available")
 PY
 
-python - <<'PY'
-import llama_cpp
-print("llama-cpp-python version:", llama_cpp.__version__)
-try:
-    from llama_cpp import llama_print_system_info
-    info = llama_print_system_info()
-    print(info.decode('utf-8'))
-except Exception as e2:
-    print("Failed:", e2)
-PY
-
 # Keep the container running
 echo "ℹ️ End script"
-
 exec sleep infinity
-
-

@@ -12,7 +12,7 @@
 - [Image setup](docs/ComfyUI_image_image_setup.md)
 - [Environment variables](docs/ComfyUI_image_configuration.md)
 - [Hardware Requirements](docs/ComfyUI_image_hardware.md)
-- [Tutorial](https://comfyui.rozenlaan.site/ComfyUI_image_tutorial)
+- [Tutorial](https://comfyui.rozenlaan.site/ComfyUI_tutorial)
 - [Update](https://comfyui.rozenlaan.site/ComfyUI_image_update)
 
 ## Workflows
@@ -74,6 +74,7 @@ mc         # Midnight Commander (file manager)
 nano       # Text Editor
 ncdu       # Clean Up
 unzip      # uncompress
+age        # public/private key encryption
 7z         # Archiving
 runpodctl  # runpod pod management
 ```

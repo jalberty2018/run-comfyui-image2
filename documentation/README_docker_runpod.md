@@ -49,7 +49,7 @@
 ### Pod documentation
 
 - [Start](https://comfyui.rozenlaan.site/ComfyUI_image/)
-- [Tutorial](https://comfyui.rozenlaan.site/ComfyUI_image_tutorial/)
+- [Tutorial](https://comfyui.rozenlaan.site/ComfyUI_tutorial)
 
 ## GPU VRAM/RAM requirements
 
