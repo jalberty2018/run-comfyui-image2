@@ -1,4 +1,4 @@
-# Pod image
+# Pod image2
 
 ## Pre-Installed Custom Nodes
 
@@ -19,7 +19,7 @@
 
 - Open from ComfyUI's interface on the left
 
-#### **Huggingface**  
+## **Huggingface**  
 
 ```bash
 export HF_TOKEN="xxxxx"
@@ -31,7 +31,7 @@ hf upload model /workspace/model.safetensors
 hf auth login --token xxxxx
 ```
 
-#### **CivitAI** 
+## **CivitAI**
 
 - Use terminal or ComfyUI-Lora-Manager web interface
 

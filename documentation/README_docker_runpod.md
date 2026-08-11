@@ -1,12 +1,14 @@
-# Run image inference with ComfyUI with provisioning
+# Run image2 inference with ComfyUI with provisioning
 
 ## Features
 
-- Automatic model and LoRA provisioning via environment variables.
-- Supports advanced workflows for **image generation** and **enhancement** using pre-installed custom nodes.
-- Compatible with high-performance NVIDIA GPUs (CUDA 12.8).
-- Compiled attentions and GPU accelerations.
-- Automatic selecting bf16 or fp8 models/workflows.
+- Automatic provisioning of models, LoRAs, VAEs, text encoders and workflows.
+- Separate model profiles for standard NVIDIA and Blackwell GPUs.
+- High- and low-VRAM selection through environment variables.
+- Uncensored text encoder.
+- CUDA 12.8 runtime with preinstalled attention accelerators and custom nodes.
+- ComfyUI, Code Server, LoRA Manager and SSH access.
+- Hugging Face and CivitAI token support.
 
 ## Built-in **authentication**
   
@@ -30,21 +32,7 @@
 
 - Specific models/loras/workflows for the templates are downloaded when the pod starts.
 
-- 👉 [Z-Image Base and Turbo](https://console.runpod.io/deploy?template=ia5t70hfak&ref=se4tkc5o)
-
-- 👉 [ERNIE-Image Base and Turbo](https://console.runpod.io/deploy?template=g8ow1s1s0a&ref=se4tkc5o)
-
 - 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
-
-- 👉 [Flux.2 Dev](https://console.runpod.io/deploy?template=8nl523gts5&ref=se4tkc5o)
-- 👉 [Flux.2 Klein](https://console.runpod.io/deploy?template=n1wa3lb44l&ref=se4tkc5o)
-
-- 👉 [Qwen image 2512](https://console.runpod.io/deploy?template=3fri17sxaa&ref=se4tkc5o)
-- 👉 [Qwen image edit 2511](https://console.runpod.io/deploy?template=mxvvx0hcmp&ref=se4tkc5o)
-
-## License note on FLUX.2 [klein] 9B
-
-- The 9B model is released under the FLUX Non-Commercial License by Black Forest Labs. This means you can use it for personal and research purposes, but commercial use is not permitted. If you use the 9B model, you are responsible for complying with that license.
 
 ### Pod documentation
 
@@ -55,29 +43,15 @@
 
 | Model           | Working GPU          | Min VRAM | Min RAM |
 |-----------------|---------------------|----------|---------|
-| Z-Image Turbo   | RTX 3090, RTX A5000 | 20 GB    | 50 GB   |
-| ERNIE-Image     | RTX A4500 | 20 GB    | 50 GB   |
-| Krea-2  bf16   | RTX 3090 |  24 GB    | 65  GB   |
+| Krea-2  bf16   | RTX 3090 RTX 4090 |  24 GB    | 65  GB   |
 | Krea-2  fp8   | RTX A4500 |  20 GB    | 65  GB   |
-| FLUX.2 Klein    | RTX A4500    | 20 GB    | 50 GB   |
-| FLUX.2 Dev bf16 | RTX 6000 Ada | 44 GB    | 80 GB   |
-| FLUX.2 Dev fp8  | RTX 3090    | 24 GB    | 50 GB   |
-| Qwen Image bf16       | RTX A6000  | 44 GB    | 65 GB   |
-| Qwen Image fp8        | RTX A5000, RTX 3090 | 24 GB    | 45 GB   |
-| Qwen Image Edit bf16  | RTX A5000 | 24 GB    | 65 GB   |
-| Qwen Image Edit fp8   | RTX A5000, RTX 3090  | 24 GB    | 45 GB   |
 
 ## Volume Storage Requirements
 
 | Model | Minimum                    |
 |-------|----------------------------|
-| Z-Image | 50 GB (`/workspace`)       |
-| ERNIE | 50 GB (`/workspace`)       |
 | Krea-2 bf16 | 60 GB (`/workspace`)       |
 | Krea-2 fp8 | 50 GB (`/workspace`)       |
-| FLUX bf16 | 90 GB (`/workspace`)       |
-| FLUX fp8 | 75 GB (`/workspace`)       |
-| Qwen Image | 70 GB (`/workspace`)       |
 
 ## Pod Storage Requirements
 
