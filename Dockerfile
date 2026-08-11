@@ -119,7 +119,7 @@ RUN --mount=type=cache,target=/root/.cache/git \
 
 # Copy docs *inside* the image
 RUN mkdir -p /docs && \
-    cp /comfyui-docs/ComfyUI_image2_configuration.md /docs/ComfyUI_image_configuration.md && \
+    cp /comfyui-docs/Runpod_configuration.md /docs/ComfyUI_image_configuration.md && \
     cp /comfyui-docs/ComfyUI_image2_custom_nodes.md /docs/ComfyUI_image_custom_nodes.md && \
     cp /comfyui-docs/ComfyUI_image_hardware.md /docs/ComfyUI_image_hardware.md && \
     cp /comfyui-docs/ComfyUI_image2_image_setup.md /docs/ComfyUI_image_image_setup.md && \
