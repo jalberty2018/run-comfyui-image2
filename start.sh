@@ -784,15 +784,19 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
     MAX_VRAM_GIB="$(get_max_vram_gib)"
     VRAM_THRESHOLD="${VRAM_THRESHOLD:-36}"
-    VRAM_TRESHHOLD_BLACKWELL="${VRAM_TRESHHOLD_BLACKWELL:-40}"
+    VRAM_THRESHOLD_BLACKWELL="${VRAM_THRESHOLD_BLACKWELL:-40}"
 
     if (( MAX_VRAM_GIB > VRAM_THRESHOLD )); then
         HF_PREFIX="HF_MODEL_HVRAM_"
-        echo "🟢 High VRAM detected (${MAX_VRAM_GIB} GB > ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
+        if [[ "$HAS_GPU_BLACKWELL" -ne 1 ]]; then
+          echo "🟢 High VRAM detected (${MAX_VRAM_GIB} GB > ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
+        fi
         export COMFYUI_VRAM_MODE=HIGH_VRAM
     else
        HF_PREFIX="HF_MODEL_LVRAM_"
-       echo "🟡 Low VRAM detected (${MAX_VRAM_GIB} GB <= ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
+       if [[ "$HAS_GPU_BLACKWELL" -ne 1 ]]; then
+         echo "🟡 Low VRAM detected (${MAX_VRAM_GIB} GB <= ${VRAM_THRESHOLD} GB via VRAM_THRESHOLD)"
+       fi
     fi
 
     has_numbered_model_pair() {
@@ -819,12 +823,12 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
     # when at least one complete model/filename pair has been configured.
     # Otherwise the generic variables are the fallback for that category.
     if [[ "$HAS_GPU_BLACKWELL" -eq 1 ]]; then
-      if (( MAX_VRAM_GIB > VRAM_TRESHHOLD_BLACKWELL )); then
+      if (( MAX_VRAM_GIB > VRAM_THRESHOLD_BLACKWELL )); then
         BLACKWELL_VRAM_PREFIX="HF_MODEL_HVRAM_BLACKWELL_"
-        echo "⚫ Blackwell high-VRAM models enabled (${MAX_VRAM_GIB} GB > ${VRAM_TRESHHOLD_BLACKWELL} GB)"
+        echo "⚫ Blackwell high-VRAM models enabled (${MAX_VRAM_GIB} GB > ${VRAM_THRESHOLD_BLACKWELL} GB via VRAM_THRESHOLD_BLACKWELL)"
       else
         BLACKWELL_VRAM_PREFIX="HF_MODEL_LVRAM_BLACKWELL_"
-        echo "⚫ Blackwell low-VRAM models enabled (${MAX_VRAM_GIB} GB <= ${VRAM_TRESHHOLD_BLACKWELL} GB)"
+        echo "⚫ Blackwell low-VRAM models enabled (${MAX_VRAM_GIB} GB <= ${VRAM_THRESHOLD_BLACKWELL} GB via VRAM_THRESHOLD_BLACKWELL)"
       fi
 
       for cat in "${CATEGORIES_HF[@]}"; do
@@ -908,7 +912,7 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
     echo "📥 Provisioning workflows"
 
     # provisioning workflows VRAM dependent
-    if (( MAX_VRAM_GIB > VRAM_TRESHHOLD )); then
+    if (( MAX_VRAM_GIB > VRAM_THRESHOLD )); then
        WORKFLOW_PREFIX="WORKFLOW_HVRAM"
     else
        WORKFLOW_PREFIX="WORKFLOW_LVRAM"
@@ -1038,6 +1042,23 @@ except Exception as e2:
     print("Failed:", e2)
 PY
 
+# Native llama.cpp diagnostics.
+LLAMA_CLI_PATH="$(command -v llama-cli 2>/dev/null || true)"
+LLAMA_SERVER_PATH="${MINIMAX_H3_LLAMA_SERVER:-$(command -v llama-server 2>/dev/null || true)}"
+
+if [[ -n "$LLAMA_CLI_PATH" && -x "$LLAMA_CLI_PATH" ]]; then
+    echo "llama.cpp CLI found: $LLAMA_CLI_PATH"
+    "$LLAMA_CLI_PATH" --version || echo "⚠️ llama-cli version check failed"
+else
+    echo "❌ llama.cpp CLI not found in PATH"
+fi
+
+if [[ -n "$LLAMA_SERVER_PATH" && -x "$LLAMA_SERVER_PATH" ]]; then
+    echo "llama.cpp server found: $LLAMA_SERVER_PATH"
+    "$LLAMA_SERVER_PATH" --version || echo "⚠️ llama-server version check failed"
+else
+    echo "❌ llama.cpp server not found via MINIMAX_H3_LLAMA_SERVER or PATH"
+fi
 
 # Keep the container running
 echo "ℹ️ End script"

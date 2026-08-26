@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # run-comfyui-image2
-FROM ls250824/comfyui-runtime2:12082026
+FROM ls250824/comfyui-runtime2:26082026
 
 WORKDIR /ComfyUI
 
@@ -55,7 +55,9 @@ RUN --mount=type=cache,target=/root/.cache/git \
 	git clone --depth=1 --filter=blob:none https://github.com/ostris/ComfyUI-Krea2-Ostris-Edit.git && \
 	git clone --depth=1 --filter=blob:none https://github.com/alexw5702-afk/krea2-anypaint.git && \
 	git clone --depth=1 --filter=blob:none https://github.com/Andro-Meta/ComfyUI-Krea-Moodboards.git && \
-	git clone --depth=1 --filter=blob:none https://github.com/iljung1106/ComfyUI-Krea2-NAG.git
+	git clone --depth=1 --filter=blob:none https://github.com/iljung1106/ComfyUI-Krea2-NAG.git && \
+    git clone --depth=1 --filter=blob:none https://github.com/obvpm/comfyui-obvpm.git && \
+    git clone --depth=1 --filter=blob:none https://github.com/cyberdeliaAI/ComfyUI-CyberKrea-Sampler.git
 
 WORKDIR /ComfyUI/custom_nodes/ComfyUI-RMBG
 # Rewrite any top-level CPU ORT refs to GPU ORT
@@ -139,24 +141,26 @@ WORKDIR /workspace
 EXPOSE 8188 9000
 
 # Labels
-LABEL org.opencontainers.image.title="ComfyUI 0.32.0 for image inference" \
+LABEL org.opencontainers.image.title="ComfyUI 0.34.0 for image inference" \
       org.opencontainers.image.description="ComfyUI + internal manager + flash-attn + sageattention + onnxruntime-gpu + torch_generic_nms + code-server + civitai downloader + huggingface_hub + custom_nodes" \
       org.opencontainers.image.source="https://hub.docker.com/r/ls250824/run-comfyui-image2" \
       org.opencontainers.image.licenses="MIT"
 
-# Test
-RUN python -c "import torch, torchvision, torchaudio, triton, importlib, importlib.util as iu; \
-print(f'Torch: {torch.__version__}'); \
-print(f'Torchvision: {torchvision.__version__}'); \
-print(f'Torchaudio: {torchaudio.__version__}'); \
-print(f'Triton: {triton.__version__}'); \
-name = 'onnxruntime_gpu' if iu.find_spec('onnxruntime_gpu') else ('onnxruntime' if iu.find_spec('onnxruntime') else None); \
-ver = (importlib.import_module(name).__version__ if name else 'not installed'); \
-label = 'ONNXRuntime-GPU' if name=='onnxruntime_gpu' else 'ONNXRuntime'; \
-print(f'{label}: {ver}'); \
-print('CUDA available:', torch.cuda.is_available()); \
-print('CUDA version:', torch.version.cuda); \
-print('Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')"
+# CPU-safe package verification. Docker builds have no GPU/driver, so avoid
+# importing CUDA-backed modules. Runtime CUDA checks are performed by start.sh.
+RUN python - <<'PY'
+import importlib.metadata as metadata
+
+packages = (
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "triton",
+    "onnxruntime-gpu",
+)
+for package in packages:
+    print(f"{package}: {metadata.version(package)}")
+PY
 
 # Start Server
 CMD [ "/start.sh" ]
