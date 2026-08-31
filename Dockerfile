@@ -54,8 +54,8 @@ RUN --mount=type=cache,target=/root/.cache/git \
 	git clone --depth=1 --filter=blob:none https://github.com/Extraltodeus/ComfyUI-Krea2-attention-tweak.git && \
 	git clone --depth=1 --filter=blob:none https://github.com/ostris/ComfyUI-Krea2-Ostris-Edit.git && \
 	git clone --depth=1 --filter=blob:none https://github.com/alexw5702-afk/krea2-anypaint.git && \
+    git clone --depth=1 --filter=blob:none https://github.com/iljung1106/ComfyUI-Krea2-NAG.git && \
 	git clone --depth=1 --filter=blob:none https://github.com/Andro-Meta/ComfyUI-Krea-Moodboards.git && \
-	git clone --depth=1 --filter=blob:none https://github.com/iljung1106/ComfyUI-Krea2-NAG.git && \
     git clone --depth=1 --filter=blob:none https://github.com/obvpm/comfyui-obvpm.git && \
     git clone --depth=1 --filter=blob:none https://github.com/cyberdeliaAI/ComfyUI-CyberKrea-Sampler.git
 

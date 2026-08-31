@@ -38,10 +38,9 @@ WORKFLOW3=https://provisioning.rozenlaan.site/image/Krea-2-turbo-t2i-vlm-2-pod.j
 WORKFLOW4=https://provisioning.rozenlaan.site/image/Krea-2-turbo-t2i-vlm-artist-pod.json
 WORKFLOW5=https://provisioning.rozenlaan.site/image/Krea-2-turbo-i2i-style-transfer-pod.json
 WORKFLOW6=https://provisioning.rozenlaan.site/image/Krea-2-turbo-i2i-edit-pod.json
-WORKFLOW7=https://provisioning.rozenlaan.site/image/Krea2_turbo_identity-edit_pod.json
-WORKFLOW8=https://provisioning.rozenlaan.site/image/Krea-2-turbo-i2i-ostris-edit-pod.json
-WORKFLOW9=https://provisioning.rozenlaan.site/image/JoyCaption-i2t-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image/Krea-2-turbo-composition.pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image/Krea-2-turbo-i2i-ostris-edit-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image/JoyCaption-i2t-pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image/Krea-2-turbo-composition.pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
