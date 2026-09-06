@@ -140,11 +140,13 @@ WORKDIR /workspace
 # Expose Necessary Ports
 EXPOSE 8188 9000
 
+# Licenses differ by component; see THIRD_PARTY_NOTICES.md.
+# Clear any inherited blanket license label for the assembled image.
 # Labels
 LABEL org.opencontainers.image.title="ComfyUI 0.34.0 for image inference" \
       org.opencontainers.image.description="ComfyUI + internal manager + flash-attn + sageattention + onnxruntime-gpu + torch_generic_nms + code-server + civitai downloader + huggingface_hub + custom_nodes" \
       org.opencontainers.image.source="https://hub.docker.com/r/ls250824/run-comfyui-image2" \
-      org.opencontainers.image.licenses="MIT"
+      org.opencontainers.image.licenses=""
 
 # CPU-safe package verification. Docker builds have no GPU/driver, so avoid
 # importing CUDA-backed modules. Runtime CUDA checks are performed by start.sh.

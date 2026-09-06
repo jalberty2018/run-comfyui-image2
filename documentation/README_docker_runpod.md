@@ -1,66 +1,81 @@
-# Run image2 inference with ComfyUI with provisioning
+# One Click - Krea-2 Base and Turbo with uncensored Qwen-VL
 
-## Features
+Generate and edit images with Krea-2 Base or the Turbo LoRA in ComfyUI. Models, VAEs, LoRAs, custom nodes and ready-to-use workflows are provisioned automatically.
 
-- Automatic provisioning of models, LoRAs, VAEs, text encoders and workflows.
-- Separate model profiles for standard NVIDIA and Blackwell GPUs.
-- High- and low-VRAM selection through environment variables.
-- Uncensored text encoder.
-- CUDA 12.8 runtime with preinstalled attention accelerators and custom nodes.
-- ComfyUI, Code Server, LoRA Manager and SSH access.
-- Hugging Face and CivitAI token support.
+**Uncensored Qwen-VL:** this template includes an abliterated Qwen3-VL-4B model without an additional prompt-filtering layer. The same model supports both Krea-2 inference and visual prompt enhancement. Users remain responsible for model use and generated content.
 
-## Built-in **authentication**
-  
-- ComfyUI
-- Code Server
-- HuggingFace API
-- CivitAI API
-- Lora Manager
+## Purpose-built and cost-efficient
 
-## Images on Docker 
+This template downloads only the Krea-2 models and tools required for its workflows. Qwen-VL is already required as the Krea-2 text encoder, so prompt enhancement does not require a second large language-model download. If you write prompts yourself, use a standard workflow; the Qwen-VL encoder remains required for inference.
 
-- If the image is **less then one day old** it is possible that it is not stable and will be updated.
+## Is this the right template?
 
-## Template Deployment on Runpod
+Choose this template to:
 
-### Deployment/Usage information
+- generate images with Krea-2 Base or the faster Turbo LoRA;
+- create or improve prompts from text and visual input;
+- edit images, transfer styles or preserve identity;
+- build compositions and generate image captions.
 
-- The templates on runpod are tested on RTX GPU's.
+## How Qwen-VL is used
 
-### Templates
+| Mode | What Qwen-VL does | Extra model download |
+|---|---|---|
+| **Krea-2 inference** | Encodes your prompt for image generation | No; required component |
+| **Prompt enhancement** | Analyzes text or images and creates a richer prompt | No; reuses the same model |
+| **No enhancement** | Standard workflows use your own prompt directly | No; the encoder is still used for inference |
 
-- Specific models/loras/workflows for the templates are downloaded when the pod starts.
+High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder. Low-VRAM profiles use its FP8-scaled abliterated variant.
 
-- 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
+## Start here
 
-### Pod documentation
+1. [Deploy the Krea-2 Base + Turbo template](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o).
+2. Select a supported NVIDIA GPU and sufficient Pod RAM.
+3. Use at least 60 GB volume storage for BF16 or 50 GB for the low-VRAM model.
+4. Set `PASSWORD` and any required download tokens.
+5. Deploy the pod and follow the container logs.
+6. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.
+7. Load one of the supplied Krea-2 workflows and run a small first test.
 
-- [Start](https://comfyui.rozenlaan.site/ComfyUI_image/)
-- [Tutorial](https://comfyui.rozenlaan.site/ComfyUI_tutorial)
+## Included workflows and tools
 
-## GPU VRAM/RAM requirements
+- Text-to-image with direct or enhanced prompts.
+- Qwen-VL visual prompting and artist-style guidance.
+- Image-to-image editing and style transfer.
+- Identity editing, AnyPaint and composition workflows.
+- JoyCaption image-to-text.
+- Krea-2 Turbo, filter-bypass, refusal-reduction and identity LoRAs.
+- ComfyUI, Code Server, LoRA Manager and SSH.
+- Persistent `/workspace` storage.
 
-| Model           | Working GPU          | Min VRAM | Min RAM |
-|-----------------|---------------------|----------|---------|
-| Krea-2  bf16   | RTX 3090 RTX 4090 |  24 GB    | 65  GB   |
-| Krea-2  fp8   | RTX A4500 |  20 GB    | 65  GB   |
+## Hardware and storage
 
-## Volume Storage Requirements
+| Profile | Tested GPU | Min VRAM | Pod RAM | Volume |
+|---|---|---:|---:|---:|
+| Krea-2 BF16 | RTX 3090/4090 | 24 GB | 65 GB | 60 GB |
+| Krea-2 low VRAM | RTX A4500 | 20 GB | 65 GB | 50 GB |
 
-| Model | Minimum                    |
-|-------|----------------------------|
-| Krea-2 bf16 | 60 GB (`/workspace`)       |
-| Krea-2 fp8 | 50 GB (`/workspace`)       |
+The template selects the model through its VRAM profile: BF16 for high VRAM and INT8 ConvRot for low VRAM. Container disk requirement: **15 GB**. Actual memory use depends on resolution, workflow and offloading.
 
-## Pod Storage Requirements
+## Configuration
 
-| Model | Minimum                    |
-|-------|----------------------------|
-| —     | 15 GB                      |
+| Variable | When needed | Purpose |
+|---|---|---|
+| `PASSWORD` | Required | Protects Code Server and pod tools |
+| `HF_TOKEN` | Gated/private or rate-limited downloads | Hugging Face authentication |
+| `CIVITAI_TOKEN` | CivitAI downloads | Model and LoRA authentication |
 
-## Other available video pods and templates
+Store tokens as RunPod secrets. Do not publish them in workflows or screenshots.
 
-- [WAN 2.2](https://comfyui.rozenlaan.site/ComfyUI_WAN/)
-- [LTX 2.3](https://comfyui.rozenlaan.site/ComfyUI_LTX/)
-- [Minimax H3](https://comfyui.rozenlaan.site/ComfyUI_MiniMax/)
+## Documentation and help
+
+- [Image inference overview](https://comfyui.rozenlaan.site/ComfyUI_image/)
+- [ComfyUI tutorial](https://comfyui.rozenlaan.site/ComfyUI_tutorial/)
+- [RunPod deployment guide](https://comfyui.rozenlaan.site/Runpod_pod_deployment/)
+- [RunPod configuration](https://comfyui.rozenlaan.site/RunPod_configuration/)
+
+## Other templates
+
+- [WAN 2.2 video](https://comfyui.rozenlaan.site/ComfyUI_WAN/)
+- [LTX 2.3 video](https://comfyui.rozenlaan.site/ComfyUI_LTX/)
+- [MiniMax H3 video](https://comfyui.rozenlaan.site/ComfyUI_MiniMax/)
