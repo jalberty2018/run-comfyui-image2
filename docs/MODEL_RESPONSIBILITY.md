@@ -21,7 +21,7 @@ A successful download is not confirmation that the intended use is permitted.
 Calling a model "uncensored" or using it for research does not waive these terms
 or applicable laws.
 
-The [Krea-2 provisioning guide](provisioning/hf_krea-2.md) links the model,
+The provisioning guide links the model,
 text encoders, VAEs and LoRAs used by this project. Review each artifact's model
 card, license file and referenced original publisher terms separately. The
 [supporting model guides](ComfyUI_image_provisioning.md) cover segmentation,

@@ -36,10 +36,8 @@ sample media retain their respective publisher terms; they are not licensed
 under this repository's MIT license.
 
 The [provisioning documentation](docs/ComfyUI_image_provisioning.md) and
-[manual model downloads](docs/provisioning/hf_krea-2.md) identify sources.
-Each Krea-2 model, text encoder, VAE, LoRA, segmentation model, upscaler and
-captioning model must be checked separately. The model repositories linked in
-the provisioning guides identify the artifacts used; consult their license files,
+manual model downloads identify sources.
+The model repositories linked in the provisioning guides identify the artifacts used; consult their license files,
 model cards and any referenced original publisher terms. Conversion, quantization,
 repackaging or hosting on Hugging Face does not itself grant additional rights.
 

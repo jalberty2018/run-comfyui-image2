@@ -80,3 +80,31 @@ WORKFLOW8=https://provisioning.rozenlaan.site/image/Krea-2-turbo-i2i-ostris-edit
 WORKFLOW9=https://provisioning.rozenlaan.site/image/JoyCaption-i2t-pod.json
 WORKFLOW10=https://provisioning.rozenlaan.site/image/Krea-2-turbo-composition.pod.json
 ```
+
+## SenseNova U1.5
+
+### Public Final BF16 + optional 8-step LoRA
+
+Set `PASSWORD` in RunPod for your pod. Public model downloads do not require a token; add `HF_TOKEN` separately if needed.
+
+```bash
+HF_MODEL_CHECKPOINTS1=t8star/SenseNova-U1.5-Comfy
+HF_MODEL_CHECKPOINTS_FILENAME1=SenseNova-U1.5-8B-MoT-BF16-T8.safetensors
+HF_MODEL_LORA1=t8star/SenseNova-U1.5-Comfy
+HF_MODEL_LORA_FILENAME1=SenseNova-U1.5-8B-MoT-LoRA-8step-ComfyUI.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/T8mars/Comfyui-SenseNova-U1.5-Wrapper-T8/main/examples/core_t2i_workflow.json
+WORKFLOW2=https://raw.githubusercontent.com/T8mars/Comfyui-SenseNova-U1.5-Wrapper-T8/main/examples/core_edit_workflow.json
+```
+
+### Private Final BF16 + optional 8-step LoRA
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+HF_MODEL_CHECKPOINTS1=t8star/SenseNova-U1.5-Comfy
+HF_MODEL_CHECKPOINTS_FILENAME1=SenseNova-U1.5-8B-MoT-BF16-T8.safetensors
+HF_MODEL_LORA1=t8star/SenseNova-U1.5-Comfy
+HF_MODEL_LORA_FILENAME1=SenseNova-U1.5-8B-MoT-LoRA-8step-ComfyUI.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/T8mars/Comfyui-SenseNova-U1.5-Wrapper-T8/main/examples/core_t2i_workflow.json
+WORKFLOW2=https://raw.githubusercontent.com/T8mars/Comfyui-SenseNova-U1.5-Wrapper-T8/main/examples/core_edit_workflow.json
+```

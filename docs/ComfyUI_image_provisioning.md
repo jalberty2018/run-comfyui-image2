@@ -4,6 +4,10 @@
 
 - [Krea-2](provisioning/hf_krea-2.md)
 
+## SenseNova U1.5
+
+- [SenseNova U1.5](provisioning/hf_sensenova.md)
+
 ## Supporting models
 
 - [SeedVR2](provisioning/hf_seedvr2.md)
