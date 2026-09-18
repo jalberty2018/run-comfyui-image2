@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # run-comfyui-image2
-FROM ls250824/comfyui-runtime2:09092026
+FROM ls250824/comfyui-runtime2:16092026
 
 WORKDIR /ComfyUI
 
@@ -14,6 +14,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 COPY --chmod=644 configuration/comfy.settings.json user/default/comfy.settings.json
 COPY --chmod=644 configuration/config.ini user/__manager/config.ini
 
+# Reclone if NODEREBUILD is set
+ARG NODEREBUILD
+RUN echo "Rebuilding custom nodes: ${NODEREBUILD}"
+
 # Clone
 WORKDIR /ComfyUI/custom_nodes
 
@@ -21,9 +25,7 @@ WORKDIR /ComfyUI/custom_nodes
 # Override with --build-arg GIT_HTTP_VERSION=HTTP/2 when appropriate.
 ARG GIT_HTTP_VERSION=HTTP/1.1
 # Separate layers retain successful clones when a later repository fails.
-# Shallow full checkouts avoid the extra lazy blob fetch of --filter=blob:none.
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/liusida/ComfyUI-Login.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/kianxyzw/comfyui-model-linker.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/chrisgoringe/cg-image-filter.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/KY-2000/comfyui-save-image-enhanced.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/scraed/LanPaint.git
@@ -41,7 +43,6 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/BigStationW/ComfyUi-Scale-Image-to-Total-Pixels-Advanced.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/bradsec/ComfyUI_StringEssentials.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/vrgamegirl19/comfyui-vrgamedevgirl.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/lrzjason/Comfyui-QwenEditUtils.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/fpgaminer/joycaption_comfyui.git
@@ -59,9 +60,10 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/ostris/ComfyUI-Krea2-Ostris-Edit.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/alexw5702-afk/krea2-anypaint.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/iljung1106/ComfyUI-Krea2-NAG.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/obvpm/comfyui-obvpm.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/Andro-Meta/ComfyUI-Krea-Moodboards.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/cyberdeliaAI/ComfyUI-CyberKrea-Sampler.git
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/chanon/comfyui-obvpm.git
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/comfyui-model-linker.git
 
 WORKDIR /ComfyUI/custom_nodes/ComfyUI-RMBG
 # Rewrite any top-level CPU ORT refs to GPU ORT
@@ -115,6 +117,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Add settings for lora manager 
 WORKDIR /ComfyUI/custom_nodes/ComfyUI-Lora-Manager
 COPY --chmod=644 /configuration/lora-manager-settings.json settings.json.template
+COPY --chmod=644 configuration/lora-manager-settings.json /lora-manager-settings.json
+
+# Rebuild docs if DOCREBUILD is set
+# Reclone if clonebust is set
+ARG DOCREBUILD
+RUN echo "Rebuilding documentation: ${DOCREBUILD}"
 
 # Set Working Directory
 WORKDIR /
@@ -147,7 +155,7 @@ EXPOSE 8188 9000
 # Licenses differ by component; see THIRD_PARTY_NOTICES.md.
 # Clear any inherited blanket license label for the assembled image.
 # Labels
-LABEL org.opencontainers.image.title="ComfyUI 0.35.0 for image inference" \
+LABEL org.opencontainers.image.title="ComfyUI 0.36.0 for image inference" \
       org.opencontainers.image.description="ComfyUI + internal manager + flash-attn + sageattention + onnxruntime-gpu + torch_generic_nms + code-server + civitai downloader + huggingface_hub + custom_nodes" \
       org.opencontainers.image.source="https://hub.docker.com/r/ls250824/run-comfyui-image2" \
       org.opencontainers.image.licenses=""

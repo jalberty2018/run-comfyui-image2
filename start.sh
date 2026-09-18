@@ -30,9 +30,6 @@ fi
 # Create output directory for cloud transfer
 mkdir -p /workspace/output/
 
-# Set optimizations
-# export PYTORCH_ALLOC_CONF=expandable_segments:True,garbage_collection_threshold:0.8
-
 # GPU detection
 echo "ℹ️ Testing GPU/CUDA provisioning"
 
@@ -59,7 +56,7 @@ if command -v nvidia-smi >/dev/null 2>&1; then
     # expose the compute_cap query field.
     GPU_COMPUTE_CAPS="$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader 2>/dev/null || true)"
     if awk -F. '$1 + 0 >= 10 { found=1 } END { exit !found }' <<< "$GPU_COMPUTE_CAPS" \
-       || grep -Eqi 'Blackwell|(^|[^[:alnum:]])(GB[0-9]{2,3}|B100|B200|B300|GeForce[[:space:]]+RTX[[:space:]]+50[0-9]{2})($|[^[:alnum:]])' <<< "$GPU_MODEL"; then
+       || grep -Eqi 'Blackwell|(^|[^[:alnum:]])(GB[0-9]{2,3}|B100|B200|B300|GeForce[[:space:]]+RTX[[:space:]]+50[0-9]{2}|RTX[[:space:]]+PRO[[:space:]]+6000)($|[^[:alnum:]])' <<< "$GPU_MODEL"; then
       export HAS_GPU_BLACKWELL=1
       echo "✅ [BLACKWELL GPU DETECTED] HAS_GPU_BLACKWELL=1"
     else
@@ -99,11 +96,10 @@ if [[ "$HAS_GPU" -eq 1 || "$HAS_GPU_RUNPOD" -eq 1 ]]; then
     fi
 	
     echo "🎉 code-server service started"
+    sleep 1
 else
     echo "⚠️ WARNING: No GPU available, Code Server not started to limit memory use"
 fi
-	
-sleep 2
 
 # Python, Torch CUDA check
 HAS_CUDA=0
@@ -165,30 +161,51 @@ HAS_COMFYUI=0
 
 if [[ "$HAS_CUDA" -eq 1 ]]; then
 
-    SETTINGS_DIR="/workspace/ComfyUI/custom_nodes/ComfyUI-Lora-Manager"
-	SETTINGS_FILE="$SETTINGS_DIR/settings.json"
-	TEMPLATE_FILE="$SETTINGS_DIR/settings.json.template"
-	
-	mkdir -p "$SETTINGS_DIR"
-	
-	if [[ -n "${CIVITAI_TOKEN:-}" ]]; then
-	    echo "ℹ️ Injecting CIVITAI_TOKEN into ComfyUI-Lora-Manager"
-	
-	    jq --arg token "$CIVITAI_TOKEN" \
-	       '.civitai_api_key = $token' \
-	       "$TEMPLATE_FILE" > "$SETTINGS_FILE"
-	else
-	    echo "⚠️ CIVITAI_TOKEN not set – Insert your token manually in ComfyUI-Lora-Manager"
-	fi
-	
-    echo "▶️ ComfyUI service starting (CUDA available)"
+    # Use the template bundled with the image, including on persistent workspaces.
+    if ! python3 - <<'PY_SETTINGS'
+import json
+import os
+from pathlib import Path
+import tempfile
+
+template = Path("/lora-manager-settings.json")
+settings = Path("/workspace/ComfyUI/custom_nodes/ComfyUI-Lora-Manager/settings.json")
+with template.open(encoding="utf-8") as source:
+    config = json.load(source)
+if not isinstance(config, dict):
+    raise ValueError("Lora-Manager settings template must contain a JSON object")
+
+token = os.environ.get("CIVITAI_TOKEN")
+if token:
+    config["civitai_api_key"] = token
+
+settings.parent.mkdir(parents=True, exist_ok=True)
+temporary = None
+try:
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=settings.parent,
+                                     prefix=".settings-", suffix=".json", delete=False) as target:
+        temporary = Path(target.name)
+        json.dump(config, target, ensure_ascii=False, indent=2)
+        target.write("\n")
+    temporary.replace(settings)
+finally:
+    if temporary is not None:
+        temporary.unlink(missing_ok=True)
+print("✅ Lora-Manager settings loaded from template" +
+      (" with CIVITAI_TOKEN" if token else ""))
+PY_SETTINGS
+    then
+        echo "❌ Failed to initialize Lora-Manager settings" >&2
+    fi
+
+   	echo "▶️ ComfyUI service starting (CUDA available)"
 	    
     python3 /workspace/ComfyUI/main.py ${COMFYUI_EXTRA_ARGUMENTS:---listen --enable-manager --preview-method latent2rgb} &
 
     # Wait until ComfyUI is ready
     MAX_TRIES="${COMFYUI_START_MAX_TRIES:-60}"
     COUNT=0
-
+		
     until curl -s http://127.0.0.1:8188 > /dev/null; do
         COUNT=$((COUNT+1))
 
@@ -217,50 +234,56 @@ show_runpod_services() {
         return 0
     fi
 
-    echo "ℹ️ Connect to the following services from console menu or url"
+    local output
+    # Buffer all output until the health checks have finished.
+    output="$(exec 2>&1
+        echo "ℹ️ Connect to the following services from console menu or url ℹ️"
 
-    if [[ -z "${RUNPOD_POD_ID:-}" ]]; then
-        echo "⚠️ RUNPOD_POD_ID not set — service URLs unavailable"
-        return 0
-    fi
-
-    local service
-    local port
-    local url
-    local local_url
-    local http_code
-    local -A services=(
-      ["Code-Server"]=9000
-      ["ComfyUI"]=8188
-    )
-
-    # Local health checks (inside the pod)
-    for service in "${!services[@]}"; do
-        port="${services[$service]}"
-        url="https://${RUNPOD_POD_ID}-${port}.proxy.runpod.net/login"
-        local_url="http://127.0.0.1:${port}/"
-
-        echo "👉 🔗 Service ${service} : ${url}"
-
-        # Check service locally (no proxy dependency)
-        http_code="$(curl -sS -o /dev/null -m 2 --connect-timeout 1 -w "%{http_code}" "$local_url" || true)"
-
-        # Treat common “service is up but protected/redirect” codes as UP
-        if [[ "$http_code" =~ ^(200|301|302|401|403|404)$ ]]; then
-            echo "✅ ${service} is running (local ${local_url}, HTTP ${http_code})"
-        else
-            echo "❌ ${service} not responding yet (local ${local_url}, HTTP ${http_code})"
+        if [[ -z "${RUNPOD_POD_ID:-}" ]]; then
+            echo "⚠️ RUNPOD_POD_ID not set — service URLs unavailable"
+            return 0
         fi
-    done
 
-    echo "👉 🔗 Lora-Manager: https://${RUNPOD_POD_ID}-8188.proxy.runpod.net/loras"
+        local service
+        local port
+        local url
+        local local_url
+        local http_code
+        local -A services=(
+          ["Code-Server"]=9000
+          ["ComfyUI"]=8188
+        )
+
+        # Local health checks (inside the pod)
+        for service in "${!services[@]}"; do
+            port="${services[$service]}"
+            url="https://${RUNPOD_POD_ID}-${port}.proxy.runpod.net/login"
+            local_url="http://127.0.0.1:${port}/"
+
+            echo "👉 🔗 Service ${service} : ${url}"
+
+            # Check service locally (no proxy dependency)
+            http_code="$(curl -sS -o /dev/null -m 2 --connect-timeout 1 -w "%{http_code}" "$local_url" || true)"
+
+            # Treat common “service is up but protected/redirect” codes as UP
+            if [[ "$http_code" =~ ^(200|301|302|401|403|404)$ ]]; then
+                echo "✅ ${service} is running (local ${local_url}, HTTP ${http_code})"
+            else
+                echo "❌ ${service} not responding yet (local ${local_url}, HTTP ${http_code})"
+            fi
+        done
+
+        echo "👉 🔗 Lora-Manager: https://${RUNPOD_POD_ID}-8188.proxy.runpod.net/loras"
+
+    )"
+    printf '%s\n' "$output"
 }
 
 show_code_server_login() {
     if [[ -n "$PASSWORD" ]]; then
-        echo "ℹ️ Code-Server login use PASSWORD set as env"
+        echo "ℹ️ Code-Server login use PASSWORD set as env ℹ️"
     else
-        echo "⚠️ Code-Server login use the logged password"
+        echo "⚠️ Code-Server login use the logged password ⚠️"
         cat /root/.config/code-server/config.yaml
     fi
 }
@@ -864,6 +887,7 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
         echo "ℹ️ No ${BLACKWELL_VRAM_PREFIX}${NAME} models configured; using ${HF_PREFIX}${NAME}"
       fi
+
       for i in $(seq 1 20); do
         VAR_MODEL="${HF_PREFIX}${NAME}${i}"
         VAR_FILE="${HF_PREFIX}${SUFFIX}${i}"
@@ -884,6 +908,7 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
         echo "ℹ️ No HF_MODEL_BLACKWELL_${NAME} models configured; using HF_MODEL_${NAME}"
       fi
+	
       for i in $(seq 1 20); do
         VAR1="HF_MODEL_${NAME}${i}"
         VAR2="HF_MODEL_${SUFFIX}${i}"
@@ -908,11 +933,12 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
         INCLUDE_VAR="HF_FULL_MODEL_INCLUDE${i}"
         EXCLUDE_VAR="HF_FULL_MODEL_EXCLUDE${i}"
         download_generic_HF "${VAR1}" "" "${!DIR_VAR}" "${INCLUDE_VAR}" "${EXCLUDE_VAR}"
-    done
+    done  
+	 
     echo "📥 Provisioning workflows"
 
     # provisioning workflows VRAM dependent
-    if (( MAX_VRAM_GIB > VRAM_THRESHOLD )); then
+    if (( MAX_VRAM_GIB > 40 )); then
        WORKFLOW_PREFIX="WORKFLOW_HVRAM"
     else
        WORKFLOW_PREFIX="WORKFLOW_LVRAM"
@@ -943,38 +969,8 @@ else
     echo "⚠️ Skipped Provisioning: No workflows or models downloaded as ComfyUI is not online"
 fi
 
-echo "ℹ️ Connections and/or diagnostic information"
-
-if [[ "$HAS_PROVISIONING" -eq 1 ]]; then
-    echo "🎉 Provisioning done, ready to create AI content 🎉"
-
-    show_runpod_services
-    show_code_server_login
-
-else
-    if [[ "$HAS_GPU_RUNPOD" -eq 0 ]]; then
-        echo "⚠️ Pod started without a runpod GPU"
-    fi
-
-    if [[ "$HAS_CUDA" -eq 0 ]]; then
-        echo "❌ Pytorch CUDA driver error/mismatch/not available"
-        if [[ "$HAS_GPU_RUNPOD" -eq 1 ]]; then
-            echo "⚠️ [SOLUTION 1] Deploy pod on another region then $RUNPOD_DC_ID. ⚠️"
-			echo "⚠️ [SOLUTION 2] Specify CUDA 12.8 using the runpod console filter. ⚠️"
-        fi
-    fi
-
-    if [[ "$HAS_CUDA" -eq 1 && "$HAS_COMFYUI" -eq 0 ]]; then
-        echo "❌ ComfyUI is not online (extreme slow vCPU's)"
-        echo "⚠️ [SOLUTION 1] restart pod ⚠️"
-		echo "⚠️ [SOLUTION 2] Deploy pod on another region then ${RUNPOD_DC_ID:-unknown} ⚠️"
-    fi
-fi
-
-echo "📘 Tutorial: https://comfyui.rozenlaan.site/ComfyUI_tutorial/"
-
 # Environment
-echo "ℹ️ Running environment"
+echo "ℹ️ Running environment check"
 
 python - <<'PY'
 import platform
@@ -1031,6 +1027,40 @@ else:
     print("ONNX Runtime: not available")
 PY
 
+if [[ "$HAS_PROVISIONING" -eq 1 ]]; then 
+    echo "🎉 Provisioning done, ready to create AI content 🎉"
+
+    show_runpod_services
+    show_code_server_login
+
+    echo "🎉 Provisioning done, ready to create AI content 🎉"
+
+else
+    echo "⚠️ Diagnostics, skipped provisioning ⚠️"
+
+    if [[ "$HAS_GPU_RUNPOD" -eq 0 ]]; then
+        echo "⚠️ Pod started without a runpod GPU"
+    fi
+
+    if [[ "$HAS_CUDA" -eq 0 ]]; then
+        echo "❌ Pytorch CUDA driver error/mismatch/not available"
+        if [[ "$HAS_GPU_RUNPOD" -eq 1 ]]; then
+            echo "⚠️ [SOLUTION 1] Deploy pod on another region then $RUNPOD_DC_ID. ⚠️"
+			echo "⚠️ [SOLUTION 2] Specify CUDA 12.8 using the runpod console filter. ⚠️"
+        fi
+    fi
+
+    if [[ "$HAS_CUDA" -eq 1 && "$HAS_COMFYUI" -eq 0 ]]; then
+        echo "❌ ComfyUI is not online (extreme slow vCPU's)"
+        echo "⚠️ [SOLUTION 1] restart pod ⚠️"
+		echo "⚠️ [SOLUTION 2] Deploy pod on another region then ${RUNPOD_DC_ID:-unknown} ⚠️"
+    fi
+fi
+
+echo "📘 Tutorial: https://comfyui.rozenlaan.site/ComfyUI_tutorial/"
+
+echo "ℹ️ llama-cpp-python check"
+
 python - <<'PY'
 import llama_cpp
 print("llama-cpp-python version:", llama_cpp.__version__)
@@ -1041,6 +1071,8 @@ try:
 except Exception as e2:
     print("Failed:", e2)
 PY
+
+echo "ℹ️ llama-cpp check"
 
 # Native llama.cpp diagnostics.
 LLAMA_CLI_PATH="$(command -v llama-cli 2>/dev/null || true)"

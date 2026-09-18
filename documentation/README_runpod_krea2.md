@@ -57,11 +57,11 @@ High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder
 
 The template selects the model through its VRAM profile: BF16 for high VRAM and INT8 ConvRot for low VRAM. Container disk requirement: **15 GB**. Actual memory use depends on resolution, workflow and offloading.
 
-## Configuration
+## Optional configuration
 
 | Variable | When needed | Purpose |
 |---|---|---|
-| `PASSWORD` | Required | Protects Code Server and pod tools |
+| `PASSWORD` | Optional | Protects Code Server and pod tools. If not set, a password is automatically generated and shown in the container logs. |
 | `HF_TOKEN` | Gated/private or rate-limited downloads | Hugging Face authentication |
 | `CIVITAI_TOKEN` | CivitAI downloads | Model and LoRA authentication |
 
