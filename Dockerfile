@@ -28,7 +28,16 @@ ARG GIT_HTTP_VERSION=HTTP/1.1
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/liusida/ComfyUI-Login.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/chrisgoringe/cg-image-filter.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/KY-2000/comfyui-save-image-enhanced.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/scraed/LanPaint.git
+# Skip example media in both the working tree and Git object downloads.
+RUN set -eux; \
+    export GIT_TERMINAL_PROMPT=0; \
+    git -c http.version="$GIT_HTTP_VERSION" clone \
+      --depth=1 --filter=blob:none --no-checkout \
+      https://github.com/scraed/LanPaint.git; \
+    git -C LanPaint -c http.version="$GIT_HTTP_VERSION" \
+      sparse-checkout set --no-cone \
+      '/*' '!/examples/' '!/example_workflows/'; \
+    git -C LanPaint -c http.version="$GIT_HTTP_VERSION" checkout
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/alexopus/ComfyUI-Image-Saver.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/Azornes/Comfyui-Resolution-Master.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/willmiao/ComfyUI-Lora-Manager.git
@@ -40,7 +49,16 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/yolain/ComfyUI-Easy-Use.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/kijai/ComfyUI-KJNodes.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/alessandrozonta/Comfyui-LoopLoader.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git
+# Keep runtime files and Git metadata, without bundled example workflows/media.
+RUN set -eux; \
+    export GIT_TERMINAL_PROMPT=0; \
+    git -c http.version="$GIT_HTTP_VERSION" clone \
+      --depth=1 --filter=blob:none --no-checkout \
+      https://github.com/ClownsharkBatwing/RES4LYF.git; \
+    git -C RES4LYF -c http.version="$GIT_HTTP_VERSION" \
+      sparse-checkout set --no-cone \
+      '/*' '!/example_workflows/' '!/workflows/'; \
+    git -C RES4LYF -c http.version="$GIT_HTTP_VERSION" checkout
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/BigStationW/ComfyUi-Scale-Image-to-Total-Pixels-Advanced.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/bradsec/ComfyUI_StringEssentials.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git
