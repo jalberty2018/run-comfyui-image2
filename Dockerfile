@@ -102,7 +102,6 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   python -m pip install --no-cache-dir --root-user-action ignore -c /constraints.txt \
     -r ComfyUI-KJNodes/requirements.txt \
     -r RES4LYF/requirements.txt \
-    -r comfyui-vrgamedevgirl/requirements.txt \
     -r ComfyUI-Lora-Manager/requirements.txt \
     -r ComfyUI-Easy-Use/requirements.txt \
     -r joycaption_comfyui/requirements.txt \
