@@ -6,7 +6,11 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 
 ## Krea-2
 
-![Image](images/ai-generated-Krea2-composition.jpg)
+![Image Krea](images/ai-generated-Krea2-composition.jpg)
+
+## QWEN Image 2.1
+
+![Image qwen](images/ai-generated-qwen-image-21-i2i-prompt-enhancer.jpg)
 
 ## 🔧 Features
 
@@ -23,11 +27,13 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 
 ### Deployment
 
-- All available templates on runpod are tested on a RTX 6000,5000,4500.
+- All available templates on runpod are tested on a RTX 6000,5000,4500, 3500
 
 ### Runpod templates
 
 - 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
+- 👉 [Qwen Image 2.1](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)
+- 👉 [Qwen Image 2.1 + prompt enhancer](https://console.runpod.io/hub/template/m3upcvmvw4?ref=se4tkc5o)
 
 ### Documentation
 

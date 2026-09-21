@@ -110,22 +110,43 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image/sensenova-i2v-pod.json
 
 ## Qwen-Image 2.1
 
-### Public INT8 ConvRot
-
-Matches the model selections in both official workflows. Use this as a standalone configuration, replacing the model and workflow variables of another template.
+### Public INT8 ConvRot Heretic
 
 ```bash
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_image_edit.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-pod.json
 ```
 
-### Private INT8 ConvRot
+### Public INT8 ConvRot Heretic + prompt enhancer
+
+```bash
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
+HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS4=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME4=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
+WORKFLOW1=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-prompt-enhancer-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-prompt-enhancer-pod.json
+```
+
+### Private
 
 ```bash
 HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
@@ -135,19 +156,21 @@ HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
+HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_image_edit.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-prompt-enhancer-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-prompt-enhancer-pod.json
 ```
 
-### Optional Qwen3.5 9B prompt enhancers
-
-Add these variables to either Qwen-Image 2.1 profile to download both additional models into `models/text_encoders`. Select them in a compatible prompt-enhancement workflow; provisioning does not modify the supplied workflows or replace their Qwen3-VL encoder.
+### Optional Heretic text-to-image prompt enhancer (BF16)
 
 ```bash
-HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen-Image-2.1
-HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
-HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors
+HF_MODEL_FULL1=pottokao/Qwen-Image-2.1-PE-T2I-Heretic
+HF_MODEL_FULL_DIR1=models/LLM/Qwen-Image-2.1-PE-T2I-Heretic
 ```

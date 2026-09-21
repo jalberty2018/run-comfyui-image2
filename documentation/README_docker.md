@@ -1,4 +1,4 @@
-# Krea-2 Base and Turbo with uncensored Qwen-VL
+# Image pod
 
 Generate and edit images with Krea-2 Base or the Turbo LoRA in ComfyUI. Models, VAEs, LoRAs, custom nodes and ready-to-use workflows are provisioned automatically.
 
@@ -32,7 +32,6 @@ High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder
 1. [Deploy the Krea-2 Base + Turbo template](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o).
 2. Select a supported NVIDIA GPU and sufficient Pod RAM.
 3. Use at least 60 GB volume storage for BF16 or 50 GB for the low-VRAM model.
-4. Set `PASSWORD` and any required download tokens.
 5. Deploy the pod and follow the container logs.
 6. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.
 7. Load one of the supplied Krea-2 workflows and run a small first test.
@@ -61,7 +60,7 @@ The template selects the model through its VRAM profile: BF16 for high VRAM and 
 
 | Variable | When needed | Purpose |
 |---|---|---|
-| `PASSWORD` | Required | Protects Code Server and pod tools |
+| `PASSWORD` | Optional | Protects Code Server and pod tools |
 | `HF_TOKEN` | Gated/private or rate-limited downloads | Hugging Face authentication |
 | `CIVITAI_TOKEN` | CivitAI downloads | Model and LoRA authentication |
 
