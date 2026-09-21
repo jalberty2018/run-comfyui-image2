@@ -8,6 +8,10 @@
 
 - [SenseNova U1.5](provisioning/hf_sensenova.md)
 
+## Qwen-Image 2.1
+
+- [Qwen-Image 2.1](provisioning/hf_qwen_image_2_1.md)
+
 ## Supporting models
 
 - [SeedVR2](provisioning/hf_seedvr2.md)

@@ -107,3 +107,47 @@ HF_MODEL_LORA_FILENAME1=SenseNova-U1.5-8B-MoT-LoRA-8step-ComfyUI.safetensors
 WORKFLOW1=https://raw.githubusercontent.com/T8mars/Comfyui-SenseNova-U1.5-Wrapper-T8/main/examples/core_t2i_workflow.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image/sensenova-i2v-pod.json
 ```
+
+## Qwen-Image 2.1
+
+### Public INT8 ConvRot
+
+Matches the model selections in both official workflows. Use this as a standalone configuration, replacing the model and workflow variables of another template.
+
+```bash
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_image_edit.json
+```
+
+### Private INT8 ConvRot
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_qwen_image_2_1_image_edit.json
+```
+
+### Optional Qwen3.5 9B prompt enhancers
+
+Add these variables to either Qwen-Image 2.1 profile to download both additional models into `models/text_encoders`. Select them in a compatible prompt-enhancement workflow; provisioning does not modify the supplied workflows or replace their Qwen3-VL encoder.
+
+```bash
+HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors
+```

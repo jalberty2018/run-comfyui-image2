@@ -4,9 +4,7 @@
 
 A streamlined and automated environment for running **ComfyUI** with **image models**, optimized for use on RunPod
 
-## Running Z-Image Turbo
-
-![runpod](images/runpod_ZIT.jpg)
+## Krea-2
 
 ![Image](images/ai-generated-Krea2-composition.jpg)
 
@@ -28,7 +26,6 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 - All available templates on runpod are tested on a RTX 6000,5000,4500.
 
 ### Runpod templates
-
 
 - 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
 

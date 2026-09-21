@@ -10,7 +10,7 @@
 - [Model provisioning](docs/ComfyUI_image_provisioning.md)
 - [Resources](docs/ComfyUI_image_resources.md)
 - [Image setup](docs/ComfyUI_image_image_setup.md)
-- [Environment variables](docs/ComfyUI_image_configuration.md)
+- [Environment variables](docs/RunPod_configuration.md)
 - [Hardware Requirements](docs/ComfyUI_image_hardware.md)
 
 ## Documentation on rozenlaan.site
