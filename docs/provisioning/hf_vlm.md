@@ -5,10 +5,10 @@
 - [`TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF`](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF)
 
 The Qwen language model and matching vision projector are used by
-`test_llama_cpp_minimax.py`. Together they require about 18 GB of storage.
+`test_llama_cpp_qwen.py`. Together they require about 18 GB of storage.
 The Dolphin Heretic model and its patched Q8_0 projector provide an additional
 uncensored multimodal prompt enhancer and require about 14.8 GB of storage.
-TinyLlama is the smaller test model used by `test_llama_cpp.py` and
+TinyLlama is the smaller test model used by `test_llama_cpp_qwen_chat.py` and
 `test_llama_cpp_python.py`. The multimodal test uses the standard
 `/workspace/ComfyUI/input/example.png`; no separate test-image download is
 required.
@@ -53,8 +53,4 @@ model for the MiniMax H3 prompt-enhancement and multimodal test workflows.
 ├── qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
 ├── mmproj-F16.gguf
 └── tinyllama-1.1b-chat-v1.0.Q8_0.gguf
-
-/workspace/ComfyUI/models/LLM/Dolphin-Mistral-24B-Venice-Edition-heretic/
-├── Dolphin-Mistral-24B-Venice-Edition-heretic.Q4_K_M.gguf
-└── Dolphin-Mistral-24B-Venice-Edition-heretic.mmproj-Q8_0-img-break-F32.gguf
 ```

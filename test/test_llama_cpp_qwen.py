@@ -3,6 +3,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+# See docs/provisioning/hf_vlm.md for download information
+
 NATIVE_ROOT = Path("/opt/llama.cpp").resolve()
 COMFYUI_ROOT = Path("/workspace/ComfyUI")
 DEFAULT_MODEL = COMFYUI_ROOT / "models/LLM/Qwen3.8/qwen3.8-27b-uncensored-fp8-q4_k_m.gguf"

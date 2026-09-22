@@ -3,6 +3,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+# See docs/provisioning/hf_vlm.md for download information
 
 DEFAULT_MODEL = Path(
     "/workspace/ComfyUI/models/LLM/Qwen3.8/tinyllama-1.1b-chat-v1.0.Q8_0.gguf"
