@@ -6,7 +6,7 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 
 ## Krea-2
 
-![Image Krea](images/ai-generated-Krea2-composition.jpg)
+![Image Krea](images/ai-generated-krea2-composition.jpg)
 
 ## QWEN Image 2.1
 

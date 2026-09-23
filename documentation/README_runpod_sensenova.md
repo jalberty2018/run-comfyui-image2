@@ -27,7 +27,7 @@ Both modes use the `SenseNova-U1.5-8B-MoT-BF16-T8.safetensors` checkpoint. The o
 ## Start here
 
 1. [Deploy the SenseNova U1.5 template](https://console.runpod.io/hub/template/5o6lkmpk4p?ref=se4tkc5o).
-2. Select an RTX 6000 Ada or L40S and allow for 50 GB of Pod RAM use.
+2. Select an RTX 6000 Ada or L40S and allow for 50 GB of Pod RAM use (CUDA 13.x required).
 3. Configure an 80 GB container volume to match the tested setup.
 4. Deploy the pod and follow the container logs.
 5. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.

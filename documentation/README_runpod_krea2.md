@@ -30,9 +30,8 @@ High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder
 ## Start here
 
 1. [Deploy the Krea-2 Base + Turbo template](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o).
-2. Select a supported NVIDIA GPU and sufficient Pod RAM.
+2. Select a supported NVIDIA GPU and sufficient Pod RAM (CUDA 13.x required).
 3. Use at least 60 GB volume storage for BF16 or 50 GB for the low-VRAM model.
-4. Set `PASSWORD` and any required download tokens.
 5. Deploy the pod and follow the container logs.
 6. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.
 7. Load one of the supplied Krea-2 workflows and run a small first test.
@@ -52,7 +51,7 @@ High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder
 
 | Profile | Tested GPU | Min VRAM | Pod RAM | Volume |
 |---|---|---:|---:|---:|
-| Krea-2 BF16 | RTX 3090/4090 | 24 GB | 65 GB | 60 GB |
+| Krea-2 BF16 | RTX 3090/4090/PRO 6000 MiG | 24 GB | 65 GB | 60 GB |
 | Krea-2 low VRAM | RTX A4500 | 20 GB | 65 GB | 50 GB |
 
 The template selects the model through its VRAM profile: BF16 for high VRAM and INT8 ConvRot for low VRAM. Container disk requirement: **15 GB**. Actual memory use depends on resolution, workflow and offloading.

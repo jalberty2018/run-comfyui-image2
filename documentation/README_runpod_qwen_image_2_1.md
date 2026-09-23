@@ -6,17 +6,24 @@ See also the [version with prompt enhancer](https://console.runpod.io/hub/templa
 
 ## Included models
 
+Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with BF16 diffusion and a BF16 standard text encoder (RTX PRO 6000). No separate LVRAM_BLACKWELL models are configured, so Blackwell GPUs at or below 40 GiB fall back to the standard profiles. With `VRAM_THRESHOLD=36`, these use INT8 ConvRot for both at or below 36 GiB, and BF16 for both above it. Heretic W4A8 and the BF16 VAE remain shared across profiles.
+
+| GPU / available VRAM | Profile | Diffusion | Standard text encoder |
+|---|---|---|---|
+| RTX PRO 6000 Blackwell (>40 GiB) | HVRAM_BLACKWELL | BF16 | BF16 |
+| RTX 4090 / MIG (24 GB) | LVRAM | INT8 ConvRot | INT8 ConvRot |
+
 | Model file | Role |
 |---|---|
-| `qwen_image_2.1_int8_convrot.safetensors` | Diffusion model for image generation and editing. |
-| `qwen3vl_8b_int8_convrot.safetensors` | Standard text encoder for the image workflow. |
+| `qwen_image_2.1_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen_image_2.1_int8_convrot.safetensors` (LVRAM) | Diffusion model for image generation and editing. |
+| `qwen3vl_8b_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen3vl_8b_int8_convrot.safetensors` (LVRAM) | Standard text encoder for the image workflow. |
 | `qwen3vl_8b_w4a8_heretic.safetensors` | Alternative Heretic text encoder. Select it in `CLIPLoader` with type `qwen_image`. |
 | `qwen_image_2.1_vae_bf16.safetensors` | VAE for conversion between pixels and image latents. |
 
 ## Start here
 
 1. This [Template](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)
-2. Select a supported NVIDIA GPU and sufficient Pod RAM.
+2. Select a supported NVIDIA GPU and sufficient Pod RAM (CUDA 13.x required).
 3. Allocate persistent volume storage for the models, tools and outputs; see below.
 4. Deploy the pod and follow the container logs.
 5. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.
@@ -30,12 +37,14 @@ See also the [version with prompt enhancer](https://console.runpod.io/hub/templa
 
 ## Hardware and storage
 
-Tested on **NVIDIA L40S and RTX 4090** with **60 GB of volume storage**.
+Tested on **NVIDIA RTX 4090, RTX PRO 6000 MiG 24 Gb, L40S** with **60 GB of volume storage**. BF16 downloads require more volume storage than INT8 ConvRot; allow additional space for profiles using BF16 diffusion and for outputs.
 
 ## Optional configuration
 
 | Variable | When needed | Purpose |
 |---|---|---|
+| `VRAM_THRESHOLD` | Optional; default `36` | Selects HVRAM above this VRAM boundary in GiB; otherwise LVRAM. |
+| `VRAM_THRESHOLD_BLACKWELL` | Optional; template value `40` | Selects HVRAM_BLACKWELL above this boundary in GiB; otherwise falls back to standard profiles because no LVRAM_BLACKWELL models are configured. |
 | `PASSWORD` | Optional | Protects pod tools; otherwise startup generates a password and prints it in the logs. |
 | `HF_TOKEN` | Authenticated downloads | Hugging Face authentication. |
 | `CIVITAI_TOKEN` | Additional CivitAI downloads | Not required for these model files. |
