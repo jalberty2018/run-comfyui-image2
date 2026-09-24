@@ -2,6 +2,8 @@
 # run-comfyui-image2
 FROM ls250824/comfyui-runtime3:24092026
 
+ENV QWEN_IMAGE_LLAMA_SERVER=/opt/llama.cpp/bin/llama-server
+
 WORKDIR /ComfyUI
 
 # Adding requirements internal comfyui-manager
