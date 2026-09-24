@@ -6,7 +6,7 @@ See also the [version with prompt enhancer](https://console.runpod.io/hub/templa
 
 ## Included models
 
-Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with BF16 diffusion and a BF16 standard text encoder (RTX PRO 6000). No separate LVRAM_BLACKWELL models are configured, so Blackwell GPUs at or below 40 GiB fall back to the standard profiles. With `VRAM_THRESHOLD=36`, these use INT8 ConvRot for both at or below 36 GiB, and BF16 for both above it. Heretic W4A8 and the BF16 VAE remain shared across profiles.
+Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with BF16 diffusion and a BF16 standard text encoder (RTX PRO 6000). No separate LVRAM_BLACKWELL models are configured, so Blackwell GPUs at or below 40 GiB fall back to the standard profiles. With `VRAM_THRESHOLD=36`, these use INT8 ConvRot for both at or below 36 GiB, and BF16 for both above it. The Heretic INT8 ConvRot text encoder and BF16 VAE are shared across all profiles.
 
 | GPU / available VRAM | Profile | Diffusion | Standard text encoder |
 |---|---|---|---|
@@ -17,7 +17,7 @@ Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with 
 |---|---|
 | `qwen_image_2.1_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen_image_2.1_int8_convrot.safetensors` (LVRAM) | Diffusion model for image generation and editing. |
 | `qwen3vl_8b_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen3vl_8b_int8_convrot.safetensors` (LVRAM) | Standard text encoder for the image workflow. |
-| `qwen3vl_8b_w4a8_heretic.safetensors` | Alternative Heretic text encoder. Select it in `CLIPLoader` with type `qwen_image`. |
+| `qwen3vl_8b_int8_convrot_heretic.safetensors` | Alternative Heretic text encoder shared across all VRAM profiles. Select it in `CLIPLoader` with type `qwen_image`. |
 | `qwen_image_2.1_vae_bf16.safetensors` | VAE for conversion between pixels and image latents. |
 
 ## Start here

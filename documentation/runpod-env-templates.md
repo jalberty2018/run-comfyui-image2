@@ -110,9 +110,7 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image/sensenova-i2v-pod.json
 
 ## Qwen-Image 2.1
 
-Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with BF16 diffusion and a BF16 standard text encoder (RTX PRO 6000). No separate LVRAM_BLACKWELL models are configured, so Blackwell GPUs at or below 40 GiB fall back to the standard profiles. With `VRAM_THRESHOLD=36`, these use INT8 ConvRot for both at or below 36 GiB, and BF16 for both above it. Heretic W4A8 and the BF16 VAE remain shared across profiles.
-
-### Public BF16 / INT8 ConvRot + Heretic W4A8
+### Public BF16 / INT8 ConvRot + Heretic INT8 ConvRot
 
 ```bash
 VRAM_THRESHOLD=36
@@ -123,21 +121,21 @@ HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
 HF_MODEL_HVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_bf16.safetensors
-HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
-HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_HVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
+HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_LVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_LVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
-HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image/QWEN-Image-21-t2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image/QWEN-Image-21-i2i-pod.json
 ```
 
-### Public BF16 / INT8 ConvRot + Heretic W4A8 + prompt enhancer
+### Public BF16 / INT8 ConvRot + Heretic INT8 ConvRot + prompt enhancer
 
 ```bash
 VRAM_THRESHOLD=36
@@ -148,14 +146,14 @@ HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
 HF_MODEL_HVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_bf16.safetensors
-HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
-HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_HVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
+HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_LVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_LVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
-HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS4=Comfy-Org/Qwen-Image-2.1
@@ -182,14 +180,14 @@ HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_BLACKWELL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
 HF_MODEL_HVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_bf16.safetensors
-HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
-HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_HVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_bf16.safetensors
+HF_MODEL_LVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_int8_convrot.safetensors
 HF_MODEL_LVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_LVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_8b_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8
-HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_w4a8_heretic.safetensors
+HF_MODEL_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_TEXT_ENCODERS3=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_TEXT_ENCODERS_FILENAME3=text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS4=Comfy-Org/Qwen-Image-2.1

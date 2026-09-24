@@ -5,7 +5,7 @@
 - [ComfyUI announcement](https://blog.comfy.org/p/qwen-image-21-in-comfyui-open-weight)
 - [Original model](https://huggingface.co/Qwen/Qwen-Image-2.1)
 - [ComfyUI model files](https://huggingface.co/Comfy-Org/Qwen-Image-2.1)
-- [Qwen-Image-2.1-Text-Encoder-Heretic-W4A8](https://huggingface.co/pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8)
+- [Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot](https://huggingface.co/pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot)
 - [Qwen-Image-2.1-PE-T2I-Heretic](https://huggingface.co/pottokao/Qwen-Image-2.1-PE-T2I-Heretic)
 
 ## Diffusion model
@@ -47,14 +47,14 @@ hf download Comfy-Org/Qwen-Image-2.1 text_encoders/qwen3vl_8b_w4a8.safetensors \
 --local-dir /workspace/ComfyUI/models/
 ```
 
-### Optional Heretic W4A8
+### Heretic INT8 ConvRot (public and private templates)
 
 ```bash
-hf download pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-W4A8 qwen3vl_8b_w4a8_heretic.safetensors \
+hf download pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot qwen3vl_8b_int8_convrot_heretic.safetensors \
 --local-dir /workspace/ComfyUI/models/text_encoders/
 ```
 
-Select `qwen3vl_8b_w4a8_heretic.safetensors` in `CLIPLoader`, with type `qwen_image`, for use with `TextEncodeQwenImage21`. Requires a ComfyUI build with Qwen-Image 2.1 support. The download is about 6.31 GB.
+Select `qwen3vl_8b_int8_convrot_heretic.safetensors` in `CLIPLoader`, with type `qwen_image`, for use with `TextEncodeQwenImage21`. Requires a ComfyUI build with Qwen-Image 2.1 support. The download is about 8.71 GB. This encoder replaces Heretic W4A8 in all public and private template profiles. The original Comfy-Org text encoder is also included: BF16 for HVRAM and HVRAM_BLACKWELL, or INT8 ConvRot for LVRAM.
 
 ## Qwen3.5 9B prompt enhancer
 
