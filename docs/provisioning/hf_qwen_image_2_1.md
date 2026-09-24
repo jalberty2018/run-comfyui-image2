@@ -83,6 +83,24 @@ hf download pottokao/Qwen-Image-2.1-PE-T2I-Heretic \
 --local-dir /workspace/ComfyUI/models/LLM/Qwen-Image-2.1-PE-T2I-Heretic/
 ```
 
+### Heretic Q8_0 GGUF prompt enhancers
+
+#### Text-to-image Q8_0
+
+```bash
+hf download pottokao/Qwen-Image-2.1-PE-T2I-Heretic-GGUF pe_t2i_heretic-Q8_0.gguf \
+--local-dir /workspace/ComfyUI/models/LLM/Qwen-Image-2.1-PE-T2I-Heretic-GGUF/
+```
+
+#### Image-to-image Q8_0 and BF16 vision projector
+
+```bash
+hf download pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF pe_i2i_heretic-Q8_0.gguf pe_i2i_heretic.mmproj-bf16.gguf \
+--local-dir /workspace/ComfyUI/models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF/
+```
+
+Keep the vision projector beside the I2I model; it is required when supplying images. In the `Qwen Image 2.1 Prompt (Local)` node, select the corresponding Q8_0 model files for T2I and I2I.
+
 ## VAE
 
 ```bash

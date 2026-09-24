@@ -3,12 +3,13 @@ import shutil
 import subprocess
 from pathlib import Path
 
-# See docs/provisioning/hf_vlm.md for download information
+# See docs/provisioning/hf_qwen_image_2_1.md for download information
 
 NATIVE_ROOT = Path("/opt/llama.cpp").resolve()
 COMFYUI_ROOT = Path("/workspace/ComfyUI")
-DEFAULT_MODEL = COMFYUI_ROOT / "models/LLM/Qwen3.8/qwen3.8-27b-uncensored-fp8-q4_k_m.gguf"
-DEFAULT_MMPROJ = COMFYUI_ROOT / "models/LLM/Qwen3.8/mmproj-F16.gguf"
+MODEL_DIR = COMFYUI_ROOT / "models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF"
+DEFAULT_MODEL = MODEL_DIR / "pe_i2i_heretic-Q8_0.gguf"
+DEFAULT_MMPROJ = MODEL_DIR / "pe_i2i_heretic.mmproj-bf16.gguf"
 DEFAULT_IMAGE = COMFYUI_ROOT / "input/example.png"
 
 def require_file(variable: str, default: Path, description: str) -> Path:
@@ -31,8 +32,8 @@ assert llama_mtmd_cli.is_relative_to(NATIVE_ROOT), (
     f"Unexpected llama-mtmd-cli installation: {llama_mtmd_cli}"
 )
 
-model = require_file("LLAMA_CPP_MINIMAX_MODEL", DEFAULT_MODEL, "Qwen GGUF model")
-mmproj = require_file("LLAMA_CPP_MINIMAX_MMPROJ", DEFAULT_MMPROJ, "MMProj GGUF model")
+model = require_file("LLAMA_CPP_MINIMAX_MODEL", DEFAULT_MODEL, "Qwen Image 2.1 I2I Q8_0 GGUF model")
+mmproj = require_file("LLAMA_CPP_MINIMAX_MMPROJ", DEFAULT_MMPROJ, "Qwen Image 2.1 I2I BF16 MMProj")
 image = require_file("LLAMA_CPP_MINIMAX_IMAGE", DEFAULT_IMAGE, "Test image")
 
 print("llama-mtmd-cli:", llama_mtmd_cli)
