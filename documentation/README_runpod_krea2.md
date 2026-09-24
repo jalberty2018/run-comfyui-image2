@@ -51,7 +51,7 @@ High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder
 
 | Profile | Tested GPU | Min VRAM | Pod RAM | Volume |
 |---|---|---:|---:|---:|
-| Krea-2 BF16 | RTX 3090/4090/PRO 6000 MiG | 24 GB | 65 GB | 60 GB |
+| Krea-2 BF16 | RTX 3090/4090 PRO 6000 MiG | 24 GB | 65 GB | 60 GB |
 | Krea-2 low VRAM | RTX A4500 | 20 GB | 65 GB | 50 GB |
 
 The template selects the model through its VRAM profile: BF16 for high VRAM and INT8 ConvRot for low VRAM. Container disk requirement: **15 GB**. Actual memory use depends on resolution, workflow and offloading.

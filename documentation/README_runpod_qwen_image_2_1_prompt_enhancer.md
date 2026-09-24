@@ -6,32 +6,33 @@ See also the [version without prompt enhancer](https://console.runpod.io/hub/tem
 
 ## Included models
 
-Blackwell GPUs above `VRAM_THRESHOLD_BLACKWELL=40` GiB use HVRAM_BLACKWELL with BF16 diffusion and a BF16 standard text encoder (RTX PRO 6000). No separate LVRAM_BLACKWELL models are configured, so Blackwell GPUs at or below 40 GiB fall back to the standard profiles. With `VRAM_THRESHOLD=36`, these use INT8 ConvRot for both at or below 36 GiB, and BF16 for both above it. The Heretic INT8 ConvRot text encoder and BF16 VAE are shared across all profiles.
-
-| GPU / available VRAM | Profile | Diffusion | Standard text encoder |
+| Total VRAM (whole GiB) | Profile | Diffusion | Text encoders |
 |---|---|---|---|
-| RTX PRO 6000 Blackwell (>40 GiB) | HVRAM_BLACKWELL | BF16 | BF16 |
-| RTX 4090 / MIG (24 GB) | LVRAM | INT8 ConvRot | INT8 ConvRot |
+| Above 40 | HVRAM | BF16 | Standard BF16 and Heretic INT8 ConvRot |
+| 40 or below | LVRAM | INT8 ConvRot | Heretic INT8 ConvRot |
 
 | Model file | Role |
 |---|---|
-| `qwen_image_2.1_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen_image_2.1_int8_convrot.safetensors` (LVRAM) | Diffusion model for image generation and editing. |
-| `qwen3vl_8b_bf16.safetensors` (HVRAM, HVRAM_BLACKWELL) / `qwen3vl_8b_int8_convrot.safetensors` (LVRAM) | Standard text encoder for the image workflow. |
-| `qwen3vl_8b_int8_convrot_heretic.safetensors` | Alternative Heretic text encoder shared across all VRAM profiles. Select it in `CLIPLoader` with type `qwen_image`. |
-| `qwen_image_2.1_vae_bf16.safetensors` | VAE for conversion between pixels and image latents. |
+| `qwen_image_2.1_bf16.safetensors` (HVRAM) / `qwen_image_2.1_int8_convrot.safetensors` (LVRAM) | Diffusion model for image generation and editing, stored in `models/diffusion_models/`. |
+| `qwen3vl_8b_bf16.safetensors` (HVRAM only) | Standard text encoder, stored in `models/text_encoders/`. |
+| `qwen3vl_8b_int8_convrot_heretic.safetensors` (both profiles) | Heretic text encoder, stored in `models/text_encoders/`. It is the only text encoder downloaded for LVRAM and an additional option for HVRAM. Select it in `CLIPLoader` with type `qwen_image`. |
+| `qwen_image_2.1_vae_bf16.safetensors` (both profiles) | VAE for conversion between pixels and image latents, stored in `models/vae/`. |
 
 ### Additional prompt enhancers
 
-Both profiles use the following INT8 ConvRot prompt enhancers. The Comfy-Org repository does not provide BF16 files for these two enhancers.
+The prompt-enhancer template downloads these Heretic GGUF files for both VRAM profiles through `HF_MODEL_FILE1..3`. All paths below are relative to `/workspace/ComfyUI/`.
 
-| Model file | Role |
-|---|---|
-| `qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors` | Qwen3.5 9B prompt enhancer for text-to-image prompts. |
-| `qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors` | Qwen3.5 9B prompt enhancer for image-edit instructions. |
+| Model file | Role | Destination directory |
+|---|---|---|
+| `pe_t2i_heretic-Q8_0.gguf` | Q8_0 prompt enhancer for text-to-image prompts. | `models/LLM/Qwen-Image-2.1-PE-T2I-Heretic-GGUF/` |
+| `pe_i2i_heretic-Q8_0.gguf` | Q8_0 prompt enhancer for image-edit instructions. | `models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF/` |
+| `pe_i2i_heretic.mmproj-bf16.gguf` | BF16 multimodal projector accompanying the I2I prompt enhancer. | `models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF/` |
+
+The T2I file comes from `pottokao/Qwen-Image-2.1-PE-T2I-Heretic-GGUF`; the I2I model and projector come from `pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF`.
 
 ## Start here
 
-1. This [template](https://console.runpod.io/hub/template/m3upcvmvw4?ref=se4tkc5o)
+1. This [template](https://console.runpod.io/hub/template/g8ow1s1s0a?ref=se4tkc5o)
 2. Select a supported NVIDIA GPU and sufficient Pod RAM (CUDA 13.x required)
 3. Allocate persistent volume storage for the models, tools and outputs; see below.
 4. Deploy the pod and follow the container logs.
@@ -55,8 +56,7 @@ Tested on **NVIDIA RTX 4090, RTX PRO 6000 MiG 24 Gb, L40S** with **60 GB of volu
 
 | Variable | When needed | Purpose |
 |---|---|---|
-| `VRAM_THRESHOLD` | Optional; default `36` | Selects HVRAM above this VRAM boundary in GiB; otherwise LVRAM. |
-| `VRAM_THRESHOLD_BLACKWELL` | Optional; template value `40` | Selects HVRAM_BLACKWELL above this boundary in GiB; otherwise falls back to standard profiles because no LVRAM_BLACKWELL models are configured. |
+| `VRAM_THRESHOLD` | Template value `40`; script fallback `36` if unset | Selects HVRAM when total CUDA-visible VRAM, rounded down to whole GiB, is strictly above this boundary; otherwise LVRAM. Applies to Blackwell GPUs too with these templates. |
 | `PASSWORD` | Optional | Protects pod tools; otherwise startup generates a password and prints it in the logs. |
 | `HF_TOKEN` | Authenticated downloads | Hugging Face authentication. |
 | `CIVITAI_TOKEN` | Additional CivitAI downloads | Not required for these model files. |
