@@ -11,17 +11,10 @@ See also the [version with prompt enhancer](https://console.runpod.io/hub/templa
 | Above 40 | HVRAM | BF16 | Standard BF16 and Heretic INT8 ConvRot |
 | 40 or below | LVRAM | INT8 ConvRot | Heretic INT8 ConvRot |
 
-| Model file | Role |
-|---|---|
-| `qwen_image_2.1_bf16.safetensors` (HVRAM) / `qwen_image_2.1_int8_convrot.safetensors` (LVRAM) | Diffusion model for image generation and editing, stored in `models/diffusion_models/`. |
-| `qwen3vl_8b_bf16.safetensors` (HVRAM only) | Standard text encoder, stored in `models/text_encoders/`. |
-| `qwen3vl_8b_int8_convrot_heretic.safetensors` (both profiles) | Heretic text encoder, stored in `models/text_encoders/`. It is the only text encoder downloaded for LVRAM and an additional option for HVRAM. Select it in `CLIPLoader` with type `qwen_image`. |
-| `qwen_image_2.1_vae_bf16.safetensors` (both profiles) | VAE for conversion between pixels and image latents, stored in `models/vae/`. |
-
 ## Start here
 
 1. This [Template](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)
-2. Select a supported NVIDIA GPU and sufficient Pod RAM (CUDA 13.x required).
+2. Select a starred NVIDIA GPU from the deployment page.
 3. Allocate persistent volume storage for the models, tools and outputs; see below.
 4. Deploy the pod and follow the container logs.
 5. Wait for `Provisioning done, ready to create AI content` before opening ComfyUI.
@@ -35,7 +28,7 @@ See also the [version with prompt enhancer](https://console.runpod.io/hub/templa
 
 ## Hardware and storage
 
-Tested on **NVIDIA RTX 4090, RTX PRO 6000 MiG 24 Gb, L40S** with **60 GB of volume storage**. BF16 downloads require more volume storage than INT8 ConvRot; allow additional space for profiles using BF16 diffusion and for outputs.
+Tested on **RTX 4090, RTX PRO 6000 MiG 24 Gb, L40S, L4** with **60 GB of volume storage**. BF16 downloads require more volume storage than INT8 ConvRot; allow additional space for profiles using BF16 diffusion and for outputs.
 
 ## Optional configuration
 
