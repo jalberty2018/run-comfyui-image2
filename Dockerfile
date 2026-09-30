@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # run-comfyui-image2
-FROM ls250824/comfyui-runtime3:24092026
+FROM ls250824/comfyui-runtime3:30092026
 
 ENV QWEN_IMAGE_LLAMA_SERVER=/opt/llama.cpp/bin/llama-server
 
@@ -90,7 +90,7 @@ RUN set -eux; \
       '/*' '!/docs/assets/' '!/example_assets/' '!/example_workflows/'; \
     git -C krea-reference -c http.version="$GIT_HTTP_VERSION" checkout
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jieg9341-lab/ComfyUI-Krea2-StyleTransfer.git
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/shootthesound/ComfyUI-KreaReason.git
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-KreaReason.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/lbouaraba/comfyui-krea2edit.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/blue-pen5805/ComfyUI-krea2-negpip.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/BlackSnowSkill/ComfyUI-Krea2-Projector-Tuner.git
@@ -194,7 +194,7 @@ EXPOSE 8188 9000
 # Licenses differ by component; see THIRD_PARTY_NOTICES.md.
 # Clear any inherited blanket license label for the assembled image.
 # Labels
-LABEL org.opencontainers.image.title="ComfyUI 0.37.1 for image inference" \
+LABEL org.opencontainers.image.title="ComfyUI 0.38.0 for image inference" \
       org.opencontainers.image.description="ComfyUI + internal manager + flash-attn + sageattention + onnxruntime-gpu + torch_generic_nms + code-server + civitai downloader + huggingface_hub + custom_nodes" \
       org.opencontainers.image.source="https://hub.docker.com/r/ls250824/run-comfyui-image2" \
       org.opencontainers.image.licenses=""

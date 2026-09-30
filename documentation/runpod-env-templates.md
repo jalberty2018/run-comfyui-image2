@@ -32,15 +32,14 @@ HF_MODEL_LORA6=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME6=Krea2_TextFusion_Refusal_Reduction.safetensors
 HF_MODEL_LORA7=yijunwang2/krea2-anypaint
 HF_MODEL_LORA_FILENAME7=krea2_anypaint_rank32.safetensors
-WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
-WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
-WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
-WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
-WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
-WORKFLOW7=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
-WORKFLOW8=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
-WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
@@ -69,16 +68,14 @@ HF_MODEL_LORA6=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME6=Krea2_TextFusion_Refusal_Reduction.safetensors
 HF_MODEL_LORA7=yijunwang2/krea2-anypaint
 HF_MODEL_LORA_FILENAME7=krea2_anypaint_rank32.safetensors
-WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
-WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
-WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
-WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
-WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
-WORKFLOW7=https://provisioning.rozenlaan.site/image2/Krea2_turbo_identity-edit_pod.json
-WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
-WORKFLOW9=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 ```
 
 ## SenseNova U1.5
