@@ -40,6 +40,7 @@ WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.j
 WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
@@ -76,6 +77,7 @@ WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.j
 WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
 ```
 
 ## SenseNova U1.5
