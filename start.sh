@@ -6,7 +6,7 @@ echo "ℹ️ Wait until the message 🎉 Provisioning done, ready to create AI c
 # Privacy-friendly anonymous deployment diagnostics.
 # Records only deployment events.
 # No user data, prompts, generated content, account identifier, or persistent pod identifier is transmitted.
-wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/----start-pod.json" || true
+wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--start-pod--.json" || true
 
 # Hugging Face CLI output tuned for RunPod plain logs.
 export NO_COLOR=1
@@ -583,8 +583,6 @@ download_model_HF() {
     run_hf_download "$model" "$file" --local-dir "$target"
     local rc=$?
 
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--download-model-hf-finished.json" || true
-
     # ----------- SUCCESS ----------
     if [[ $rc -eq 0 ]]; then
         echo "✅ HF download completed"
@@ -650,8 +648,6 @@ download_generic_HF() {
         run_hf_download "$model" "${hf_args[@]}" --local-dir "$target"
         local rc=$?
     fi
-
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--download-generic-hf-finished.json" || true
 
     # ----------- SUCCESS ----------
     if [[ $rc -eq 0 ]]; then
@@ -774,8 +770,6 @@ download_workflow() {
 
     echo "[DONE] Downloaded $filename"
 
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--download-workflow-finished.json" || true
-
     case "$filename" in
         *.zip)
             echo "📦  [EXTRACT] Unzipping $filename ..."
@@ -842,8 +836,6 @@ download_media() {
         echo "⚠️  [ERROR] Failed to download $url"
         rm -f "$filepath"
     fi
-
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--download-media-finished.json" || true
 
     sleep 1
     return 0
@@ -1124,7 +1116,7 @@ if [[ "$HAS_PROVISIONING" -eq 1 ]]; then
     show_code_server_login
 
     echo "🎉 Provisioning done, ready to create AI content 🎉"
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--success.json" || true
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--success-deployed-pod--.json" || true
 
 else
     echo "⚠️ Diagnostics, skipped provisioning ⚠️"
@@ -1188,5 +1180,5 @@ fi
 
 # Keep the container running
 echo "ℹ️ End script"
-wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--end-script.json" || true
+wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--end-start-script-pod--.json" || true
 exec sleep infinity
