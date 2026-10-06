@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # run-comfyui-image2
-FROM ls250824/comfyui-runtime3:30092026
+FROM ls250824/comfyui-runtime3:06102026
 
 ENV QWEN_IMAGE_LLAMA_SERVER=/opt/llama.cpp/bin/llama-server
 
@@ -104,6 +104,8 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/comfyui-model-linker.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI_Qwen_Image_Prompt.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-QwenImageRefPack.git
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/capitan01R/ComfyUI-qwen_img_2_1_enhancer.git
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-Omnichar.git
 
 WORKDIR /ComfyUI/custom_nodes/ComfyUI-RMBG
 # Rewrite any top-level CPU ORT refs to GPU ORT
@@ -151,6 +153,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     -r ComfyUI-Image-Saver/requirements.txt \
     -r ComfyUI-SeedVR2_VideoUpscaler/requirements.txt \
     -r ComfyUI-SAM3/requirements.txt \
+    -r ComfyUI-Omnichar/requirements.txt \
     -r comfyui-model-linker/requirements.txt
 
 # Add settings for lora manager 
@@ -194,7 +197,7 @@ EXPOSE 8188 9000
 # Licenses differ by component; see THIRD_PARTY_NOTICES.md.
 # Clear any inherited blanket license label for the assembled image.
 # Labels
-LABEL org.opencontainers.image.title="ComfyUI 0.38.0 for image inference" \
+LABEL org.opencontainers.image.title="ComfyUI 0.39.0 for image inference" \
       org.opencontainers.image.description="ComfyUI + internal manager + flash-attn + sageattention + onnxruntime-gpu + torch_generic_nms + code-server + civitai downloader + huggingface_hub + custom_nodes" \
       org.opencontainers.image.source="https://hub.docker.com/r/ls250824/run-comfyui-image2" \
       org.opencontainers.image.licenses=""

@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Build tag
+export BUILD_TAG=06102026
+
 # Generate a fresh identifier for this script execution, including container restarts.
 echo "▶️ Pod run-comfyui-image2 started"
 echo "ℹ️ Wait until the message 🎉 Provisioning done, ready to create AI content 🎉 is displayed"
@@ -6,7 +10,7 @@ echo "ℹ️ Wait until the message 🎉 Provisioning done, ready to create AI c
 # Privacy-friendly anonymous deployment diagnostics.
 # Records only deployment events.
 # No user data, prompts, generated content, account identifier, or persistent pod identifier is transmitted.
-wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--start-pod--.json" || true
+wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--start-pod-${BUILD_TAG}.json" || true
 
 # Hugging Face CLI output tuned for RunPod plain logs.
 export NO_COLOR=1
@@ -44,7 +48,7 @@ HAS_GPU_RUNPOD=0
 if [[ -n "${RUNPOD_GPU_COUNT:-}" && "${RUNPOD_GPU_COUNT:-0}" -gt 0 ]]; then
   HAS_GPU_RUNPOD=1
   echo "✅ [GPU DETECTED] Found via RUNPOD_GPU_COUNT=${RUNPOD_GPU_COUNT}"
-  wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--runpod-gpu-detected.json" || true
+  wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--runpod-gpu-detected-${BUILD_TAG}.json" || true
 else
   echo "⚠️ [NO GPU] No Runpod.io GPU detected."
 fi  
@@ -220,7 +224,7 @@ PY_SETTINGS
             echo "⚠️  WARNING: ComfyUI is still not responding after $MAX_TRIES attempts (~2 min)."
             echo "⚠️  SOLUTION: Use another region then $RUNPOD_DC_ID as vCPU speed is slow (normal count is around 20)"
             echo "⚠️  Continuing script anyway..."
-            wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++comfyui-timed-out++.json" || true
+            wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++comfyui-timed-out-${BUILD_TAG}.json" || true
             break
         fi
 
@@ -298,6 +302,32 @@ show_code_server_login() {
 
 # Provisioning routines
 
+report_download_space_error() {
+    local message="${1,,}"
+    if [[ "$message" == *"no space left on device"* || "$message" == *"enospc"* ]]; then
+        echo "❌ [DOWNLOAD] No space left on device"
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++no-space-left-${BUILD_TAG}.json" || true
+
+        return 0
+    fi
+    return 1
+}
+
+run_wget_download() {
+    local output
+    local exit_code
+    # Keep diagnostics in memory so reporting also works when the disk is full.
+    if output="$(LC_ALL=C wget -nv "$@" 2>&1)"; then
+        return 0
+    else
+        exit_code=$?
+    fi
+    printf '%s\n' "$output"
+    report_download_space_error "$output" || true
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++wget-no-space-left-${BUILD_TAG}.json" || true
+    return "$exit_code"
+}
+
 run_hf_download() {
     local stall_timeout="${HF_DOWNLOAD_STALL_TIMEOUT:-300}"
     local kill_after="${HF_DOWNLOAD_KILL_AFTER:-30}"
@@ -342,6 +372,7 @@ run_hf_download() {
     # real download, but does not transfer the model itself.
     printf -v hf_dry_run_command '%q ' hf download --dry-run --format human "$@"
     dry_run_output="$(eval "$hf_dry_run_command" 2>&1 || true)"
+    report_download_space_error "$dry_run_output" || true
     if [[ "$dry_run_output" =~ totalling[[:space:]]+([0-9]+([.][0-9]+)?)([KMGTPE]?) ]]; then
         total_size_value="${BASH_REMATCH[1]}"
         total_size_unit="${BASH_REMATCH[3]}"
@@ -382,6 +413,7 @@ run_hf_download() {
     run_download_attempt() {
         local disable_xet="$1"
         local backend_name="$2"
+        local space_error_reported=0
 
         date +%s > "$activity_tmp_file"
         mv -f "$activity_tmp_file" "$last_activity_file"
@@ -505,6 +537,9 @@ run_hf_download() {
             mv -f "$activity_tmp_file" "$last_activity_file"
 
             printf '%s\n' "$line"
+            if (( space_error_reported == 0 )) && report_download_space_error "$line"; then
+                space_error_reported=1
+            fi
         done < <(
             stdbuf -oL tr '\r' '\n' <"$fifo" \
                 | sed -u -E \
@@ -552,6 +587,8 @@ run_hf_download() {
     fi
 
     echo "❌ [DOWNLOAD] Plain HTTP download failed with exit code ${exit_code}."
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++failed-hf-download-${BUILD_TAG}.json" || true
+
     return "$exit_code"
 }
 
@@ -605,6 +642,7 @@ download_model_HF() {
 
     # -------- REAL FAILURE --------
     echo "❌ HF download failed (exit=$rc)"
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++failed-hf-model-download-${BUILD_TAG}.json" || true
     sleep 1
     return 0
 }
@@ -671,6 +709,8 @@ download_generic_HF() {
 
     # -------- REAL FAILURE --------
     echo "❌ HF download failed (exit=$rc)"
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++failed-hf-generic-download-${BUILD_TAG}.json" || true
+
     sleep 1
     return 0
 }
@@ -762,7 +802,7 @@ download_workflow() {
 
     echo "ℹ️ [DOWNLOAD] Fetching $filename ..."
 
-    if ! wget -q -P "$dest_dir" "$url"; then
+    if ! run_wget_download -P "$dest_dir" "$url"; then
         echo "⚠️ Download model workflow failed: $url"
         return 0
     fi
@@ -829,7 +869,7 @@ download_media() {
 
     # Download file
     echo "🎞️  [DOWNLOAD] Fetching $filename → ComfyUI/input ..."
-    if wget -q -O "$filepath" "$url"; then
+    if run_wget_download -O "$filepath" "$url"; then
         echo "✅ [DONE] Downloaded $filename"
     else
         echo "⚠️  [ERROR] Failed to download $url"
@@ -847,7 +887,7 @@ if [[ "$HAS_COMFYUI" -eq 1 ]]; then
 
     # provisioning Models and loras
     echo "📥 Provisioning models HF"
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--start-provisioning-models-workflows.json" || true
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--start-provisioning-models-workflows-${BUILD_TAG}.json" || true
 
     # categorie:  NAME:SUFFIX:MAP
     CATEGORIES_HF=(
@@ -896,7 +936,7 @@ PY_VRAM
         read -r MAX_VRAM_GIB MAX_VRAM_DISPLAY_GIB <<< "$VRAM_VALUES"
     else
         echo "⚠️ Cannot detect CUDA VRAM; using low-VRAM provisioning defaults"
-        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++zero-vram-detected++.json" || true
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++zero-vram-detected-${BUILD_TAG}.json" || true
         MAX_VRAM_GIB=0
         MAX_VRAM_DISPLAY_GIB=unknown
     fi
@@ -907,14 +947,14 @@ PY_VRAM
         HF_PREFIX="HF_MODEL_HVRAM_"
         if [[ "$HAS_GPU_BLACKWELL" -ne 1 ]]; then
           echo "🟢 High VRAM detected (${MAX_VRAM_DISPLAY_GIB} GiB, rounded; threshold ${VRAM_THRESHOLD} GiB via VRAM_THRESHOLD)"
-          wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--high-vram-detected.json" || true
+          wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--high-vram-detected-${BUILD_TAG}.json" || true
         fi
         export COMFYUI_VRAM_MODE=HIGH_VRAM
     else
        HF_PREFIX="HF_MODEL_LVRAM_"
        if [[ "$HAS_GPU_BLACKWELL" -ne 1 ]]; then
          echo "🟡 Low VRAM detected (${MAX_VRAM_DISPLAY_GIB} GiB, rounded; threshold ${VRAM_THRESHOLD} GiB via VRAM_THRESHOLD)"
-         wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--low-vram-detected.json" || true
+         wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--low-vram-detected-${BUILD_TAG}.json" || true
        fi
     fi
 
@@ -945,11 +985,11 @@ PY_VRAM
       if (( MAX_VRAM_GIB > VRAM_THRESHOLD_BLACKWELL )); then
         BLACKWELL_VRAM_PREFIX="HF_MODEL_HVRAM_BLACKWELL_"
         echo "⚫ Blackwell high-VRAM models enabled (${MAX_VRAM_DISPLAY_GIB} GiB, rounded; threshold ${VRAM_THRESHOLD_BLACKWELL} GiB via VRAM_THRESHOLD_BLACKWELL)"
-        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--high-vram-blackwell-detected.json" || true
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--high-vram-blackwell-detected-${BUILD_TAG}.json" || true
       else
         BLACKWELL_VRAM_PREFIX="HF_MODEL_LVRAM_BLACKWELL_"
         echo "⚫ Blackwell low-VRAM models enabled (${MAX_VRAM_DISPLAY_GIB} GiB, rounded; threshold ${VRAM_THRESHOLD_BLACKWELL} GiB via VRAM_THRESHOLD_BLACKWELL)"
-        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--low-vram-blackwell-detected.json" || true
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--low-vram-blackwell-detected-${BUILD_TAG}.json" || true
       fi
 
       for cat in "${CATEGORIES_HF[@]}"; do
@@ -1115,14 +1155,14 @@ if [[ "$HAS_PROVISIONING" -eq 1 ]]; then
     show_code_server_login
 
     echo "🎉 Provisioning done, ready to create AI content 🎉"
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--success-deployed-pod--.json" || true
+    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--success-deployed-pod-${BUILD_TAG}.json" || true
 
 else
     echo "⚠️ Diagnostics, skipped provisioning ⚠️"
 
     if [[ "$HAS_GPU_RUNPOD" -eq 0 ]]; then
         echo "⚠️ Pod started without a runpod GPU"
-        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-gpu++.json" || true
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-gpu-${BUILD_TAG}.json" || true
     fi
 
     if [[ "$HAS_CUDA" -eq 0 ]]; then
@@ -1130,7 +1170,7 @@ else
         if [[ "$HAS_GPU_RUNPOD" -eq 1 ]]; then
             echo "⚠️ [SOLUTION 1] Deploy pod on another region then $RUNPOD_DC_ID. ⚠️"
 			echo "⚠️ [SOLUTION 2] Specify CUDA 13.0 or higher using the runpod console filter. ⚠️"
-            wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-cuda++.json" || true
+            wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-cuda-${BUILD_TAG}.json" || true
         fi
     fi
 
@@ -1138,7 +1178,7 @@ else
         echo "❌ ComfyUI is not online (extreme slow vCPU's)"
         echo "⚠️ [SOLUTION 1] restart pod ⚠️"
 		echo "⚠️ [SOLUTION 2] Deploy pod on another region then ${RUNPOD_DC_ID:-unknown} ⚠️"
-        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-comfyui++.json" || true
+        wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++fail-comfyui-${BUILD_TAG}.json" || true
     fi
 fi
 
@@ -1179,5 +1219,5 @@ fi
 
 # Keep the container running
 echo "ℹ️ End script"
-wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--end-start-script-pod--.json" || true
+wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/--end-start-script-pod-${BUILD_TAG}.json" || true
 exec sleep infinity
