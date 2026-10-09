@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build tag
-export BUILD_TAG=06102026
+export BUILD_TAG=09102026
 
 # Generate a fresh identifier for this script execution, including container restarts.
 echo "▶️ Pod run-comfyui-image2 started"
@@ -1022,8 +1022,6 @@ PY_VRAM
         if has_numbered_model_pair "$BLACKWELL_VRAM_PREFIX" "$NAME" "$SUFFIX"; then
           continue
         fi
-
-        echo "ℹ️ No ${BLACKWELL_VRAM_PREFIX}${NAME} models configured; using ${HF_PREFIX}${NAME}"
       fi
 
       for i in $(seq 1 20); do
@@ -1043,8 +1041,6 @@ PY_VRAM
         if has_numbered_model_pair "HF_MODEL_BLACKWELL_" "$NAME" "$SUFFIX"; then
           continue
         fi
-
-        echo "ℹ️ No HF_MODEL_BLACKWELL_${NAME} models configured; using HF_MODEL_${NAME}"
       fi
 	
       for i in $(seq 1 20); do
