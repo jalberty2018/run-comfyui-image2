@@ -4,6 +4,7 @@
 
 - [ComfyUI announcement](https://blog.comfy.org/p/qwen-image-21-in-comfyui-open-weight)
 - [Original model](https://huggingface.co/Qwen/Qwen-Image-2.1)
+- [Original Turbo model](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo)
 - [ComfyUI model files](https://huggingface.co/Comfy-Org/Qwen-Image-2.1)
 - [Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot](https://huggingface.co/pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot)
 - [akhaliq/Qwen-Image-2.1-Multiple-Angles-LoRA](https://huggingface.co/akhaliq/Qwen-Image-2.1-Multiple-Angles-LoRA)
@@ -58,6 +59,29 @@ hf download pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-convrot qwen3vl_8b
 
 ```bash
 hf download Comfy-Org/Qwen-Image-2.1 vae/qwen_image_2.1_vae_bf16.safetensors \
+--local-dir /workspace/ComfyUI/models/
+```
+
+## Turbo LoRA
+
+```bash
+hf download Comfy-Org/Qwen-Image-2.1 loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors \
+--local-dir /workspace/ComfyUI/models/
+```
+
+## Fun ControlNet Union model patches
+
+### BF16 
+
+```bash
+hf download Comfy-Org/Qwen-Image-2.1 model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors \
+--local-dir /workspace/ComfyUI/models/
+```
+
+### INT8 ConvRot
+
+```bash
+hf download Comfy-Org/Qwen-Image-2.1 model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors \
 --local-dir /workspace/ComfyUI/models/
 ```
 

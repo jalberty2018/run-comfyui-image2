@@ -8,6 +8,7 @@
 - [Vae Upscale 2x](https://huggingface.co/spacepxl/Wan2.1-VAE-upscale2x)
 - [identity-edit](https://huggingface.co/conradlocke/krea2-identity-edit)
 - [Krea2 AnyPaint](https://huggingface.co/yijunwang2/krea2-anypaint)
+- [Krea2 OpenPose ControlNet LoRA](https://huggingface.co/thedeoxen/Krea-2-pose-controlnet)
 
 ## Diffusion_model
 
@@ -110,6 +111,15 @@ hf download Comfy-Org/Krea-2 loras/krea2_turbo_lora_rank_64_bf16.safetensors \
 ```
 
 ## Loras
+
+### Krea2 Turbo OpenPose ControlNet LoRA
+
+```bash
+hf download thedeoxen/Krea-2-pose-controlnet krea2_turbo_openpose_controlnet.safetensors \
+--local-dir /workspace/ComfyUI/models/loras/
+```
+
+Use the `pose_image` output from OpenPose 3D Poser as image 1 in the Krea2 Ostris Edit text encoder, with `kv_cache` enabled. Both node packs are included in Image2. Load this file as a LoRA (recommended strength 0.8–1.0), not as a standalone ControlNet model. The upstream example uses Krea2 Turbo, approximately 10 steps, CFG 1.0 and `euler` / `simple`.
 
 ### Krea2 AnyPaint rank 32
 

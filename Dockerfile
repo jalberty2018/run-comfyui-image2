@@ -96,6 +96,8 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/BlackSnowSkill/ComfyUI-Krea2-Projector-Tuner.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/Extraltodeus/ComfyUI-Krea2-attention-tweak.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/ostris/ComfyUI-Krea2-Ostris-Edit.git
+# OpenPose 3D Poser includes its prebuilt frontend and needs no extra pip packages.
+RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/roborg/comfyui-poser.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/alexw5702-afk/krea2-anypaint.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/iljung1106/ComfyUI-Krea2-NAG.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/Andro-Meta/ComfyUI-Krea-Moodboards.git
@@ -107,6 +109,16 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/capitan01R/ComfyUI-qwen_img_2_1_enhancer.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-Omnichar.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-qwenmultiangle.git
+# Skip README media and example workflows; retain preprocessor code and assets.
+RUN set -eux; \
+    export GIT_TERMINAL_PROMPT=0; \
+    git -c http.version="$GIT_HTTP_VERSION" clone \
+      --depth=1 --filter=blob:none --no-checkout \
+      https://github.com/Fannovel16/comfyui_controlnet_aux.git; \
+    git -C comfyui_controlnet_aux -c http.version="$GIT_HTTP_VERSION" \
+      sparse-checkout set --no-cone \
+      '/*' '!/examples/'; \
+    git -C comfyui_controlnet_aux -c http.version="$GIT_HTTP_VERSION" checkout
 
 WORKDIR /ComfyUI/custom_nodes/ComfyUI-RMBG
 # Rewrite any top-level CPU ORT refs to GPU ORT
@@ -154,6 +166,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     -r ComfyUI-Image-Saver/requirements.txt \
     -r ComfyUI-SeedVR2_VideoUpscaler/requirements.txt \
     -r ComfyUI-SAM3/requirements.txt \
+    -r comfyui_controlnet_aux/requirements.txt \
     -r ComfyUI-Omnichar/requirements.txt \
     -r comfyui-model-linker/requirements.txt
 

@@ -25,12 +25,12 @@ hf download pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF pe_i2i_heretic-Q8_0.gguf
 ### Model
 
 ```bash
-hf download theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF \
-  qwen3.8-27b-uncensored-fp8-q4_k_m.gguf \
+hf download mradermacher/Qwen3.8-27B-Uncensored-FP8-GGUF \
+  Qwen3.8-27B-Uncensored-FP8.Q2_K.gguf \
   --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
 ```
 
-### Matching MMProj
+### Matching vision projector
 
 The F16 projector comes from the matching base-model repository:
 

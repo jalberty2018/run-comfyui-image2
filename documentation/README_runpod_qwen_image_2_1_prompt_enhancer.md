@@ -8,7 +8,7 @@ See also the [version without prompt enhancer](https://console.runpod.io/hub/tem
 
 | Total VRAM (whole GiB) | Profile | Diffusion | Text encoders |
 |---|---|---|---|
-| Above 40 | HVRAM | BF16 | Standard BF16 and Heretic INT8 ConvRot |
+| Above 40 | HVRAM | BF16 | Heretic INT8 ConvRot |
 | 40 or below | LVRAM | INT8 ConvRot | Heretic INT8 ConvRot |
 
 ### Additional prompt enhancers
@@ -35,7 +35,7 @@ The T2I file comes from `pottokao/Qwen-Image-2.1-PE-T2I-Heretic-GGUF`; the I2I m
 
 ## Hardware and storage
 
-Tested on **NVIDIA RTX 4090, PRO 6000 MiG 24 Gb, L40S, L4** with **60 GB of volume storage**. BF16 downloads require more volume storage than INT8 ConvRot; allow additional space for profiles using BF16 diffusion and for outputs.
+Tested on **NVIDIA RTX 3090/4090, PRO 6000 MiG 24 Gb, L40S, L4** with **60 GB of volume storage**. BF16 downloads require more volume storage than INT8 ConvRot; allow additional space for profiles using BF16 diffusion and for outputs.
 
 ## Optional configuration
 

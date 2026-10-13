@@ -2,6 +2,8 @@
 
 ## Krea-2
 
+Both templates provision the OpenPose LoRA as `HF_MODEL_LORA8`. For pose control, connect OpenPose 3D Poser's `pose_image` to image 1 of Krea2 Ostris Edit and enable `kv_cache`. The LoRA is downloaded automatically; select it in the pose workflow to apply it.
+
 ### Public Raw + turbo-lora
 
 ```bash
@@ -32,6 +34,8 @@ HF_MODEL_LORA6=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME6=Krea2_TextFusion_Refusal_Reduction.safetensors
 HF_MODEL_LORA7=yijunwang2/krea2-anypaint
 HF_MODEL_LORA_FILENAME7=krea2_anypaint_rank32.safetensors
+HF_MODEL_LORA8=thedeoxen/Krea-2-pose-controlnet
+HF_MODEL_LORA_FILENAME8=krea2_turbo_openpose_controlnet.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
@@ -69,6 +73,8 @@ HF_MODEL_LORA6=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME6=Krea2_TextFusion_Refusal_Reduction.safetensors
 HF_MODEL_LORA7=yijunwang2/krea2-anypaint
 HF_MODEL_LORA_FILENAME7=krea2_anypaint_rank32.safetensors
+HF_MODEL_LORA8=thedeoxen/Krea-2-pose-controlnet
+HF_MODEL_LORA_FILENAME8=krea2_turbo_openpose_controlnet.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
@@ -125,26 +131,30 @@ HF_MODEL_HVRAM_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
+HF_MODEL_LORA1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LORA_FILENAME1=loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors
+HF_MODEL_PATCHES1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_PATCHES_FILENAME1=model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-t2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-multiple-angle-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
 ```
 
 ### Public BF16 / INT8 ConvRot + Heretic INT8 ConvRot + prompt enhancer
 
 ```bash
 VRAM_THRESHOLD=40
-HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
-HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
-HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
-HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
-HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
-HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
+HF_MODEL_FILE1=pottokao/Qwen-Image-2.1-PE-T2I-Heretic-GGUF
+HF_MODEL_FILE_FILENAME1=pe_t2i_heretic-Q8_0.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Qwen-Image-2.1-PE-T2I-Heretic-GGUF
+HF_MODEL_FILE2=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
+HF_MODEL_FILE_FILENAME2=pe_i2i_heretic-Q8_0.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
 HF_MODEL_FILE3=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE_FILENAME3=pe_i2i_heretic-Q8_0.gguf
+HF_MODEL_FILE_FILENAME3=pe_i2i_heretic.mmproj-bf16.gguf
 HF_MODEL_FILE_DIR3=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE4=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE_FILENAME4=pe_i2i_heretic.mmproj-bf16.gguf
-HF_MODEL_FILE_DIR4=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
 HF_MODEL_HVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_bf16.safetensors
 HF_MODEL_HVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
@@ -157,10 +167,19 @@ HF_MODEL_HVRAM_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
+HF_MODEL_LORA1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LORA_FILENAME1=loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors
+HF_MODEL_PATCHES1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_PATCHES_FILENAME1=model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-t2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-t2i-prompt-enhancer-pod.json
 WORKFLOW4=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-prompt-enhancer-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-multiple-angle-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
 ```
 
 ### Private
@@ -170,6 +189,15 @@ HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
 PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
 CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
 VRAM_THRESHOLD=40
+HF_MODEL_FILE1=pottokao/Qwen-Image-2.1-PE-T2I-Heretic-GGUF
+HF_MODEL_FILE_FILENAME1=pe_t2i_heretic-Q8_0.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Qwen-Image-2.1-PE-T2I-Heretic-GGUF
+HF_MODEL_FILE2=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
+HF_MODEL_FILE_FILENAME2=pe_i2i_heretic-Q8_0.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
+HF_MODEL_FILE3=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
+HF_MODEL_FILE_FILENAME3=pe_i2i_heretic.mmproj-bf16.gguf
+HF_MODEL_FILE_DIR3=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
 HF_MODEL_HVRAM_DIFFUSION_MODELS1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/qwen_image_2.1_bf16.safetensors
 HF_MODEL_HVRAM_TEXT_ENCODERS1=Comfy-Org/Qwen-Image-2.1
@@ -182,20 +210,17 @@ HF_MODEL_HVRAM_TEXT_ENCODERS2=pottokao/Qwen-Image-2.1-Text-Encoder-Heretic-int8-
 HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME2=qwen3vl_8b_int8_convrot_heretic.safetensors
 HF_MODEL_VAE1=Comfy-Org/Qwen-Image-2.1
 HF_MODEL_VAE_FILENAME1=vae/qwen_image_2.1_vae_bf16.safetensors
-HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
-HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
-HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
-HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
-HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
-HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
-HF_MODEL_FILE3=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE_FILENAME3=pe_i2i_heretic-Q8_0.gguf
-HF_MODEL_FILE_DIR3=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE4=pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
-HF_MODEL_FILE_FILENAME4=pe_i2i_heretic.mmproj-bf16.gguf
-HF_MODEL_FILE_DIR4=models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF
+HF_MODEL_LORA1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_LORA_FILENAME1=loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors
+HF_MODEL_PATCHES1=Comfy-Org/Qwen-Image-2.1
+HF_MODEL_PATCHES_FILENAME1=model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-t2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-t2i-prompt-enhancer-pod.json
 WORKFLOW4=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-prompt-enhancer-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-multiple-angle-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
 ```
