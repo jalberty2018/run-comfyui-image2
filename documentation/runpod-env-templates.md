@@ -45,6 +45,7 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edi
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
@@ -84,6 +85,7 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edi
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
 ```
 
 ## SenseNova U1.5
@@ -140,6 +142,7 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-multiple-angle-pod.json
 WORKFLOW4=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod.json
 WORKFLOW5=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pod.json
 ```
 
 ### Public BF16 / INT8 ConvRot + Heretic INT8 ConvRot + prompt enhancer
@@ -180,6 +183,7 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pod.json
 ```
 
 ### Private
@@ -223,4 +227,5 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pod.json
 ```
