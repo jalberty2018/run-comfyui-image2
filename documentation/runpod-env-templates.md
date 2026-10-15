@@ -45,7 +45,8 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edi
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
+WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
@@ -54,6 +55,12 @@ WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-co
 CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
 HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
 PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+HF_MODEL_FILE1=ThalisAI/Qwen3-VL-8B-Instruct-heretic
+HF_MODEL_FILE_FILENAME1=Qwen3-VL-8B-Instruct-heretic-Q6_K.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Krea-VLM-Heretic
+HF_MODEL_FILE2=Qwen/Qwen3-VL-8B-Instruct-GGUF
+HF_MODEL_FILE_FILENAME2=mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Krea-VLM-Heretic
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Krea-2
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/krea2_raw_bf16.safetensors
 HF_MODEL_TEXT_ENCODERS1=wangkanai/qwen3-vl-4b-instruct
@@ -85,7 +92,8 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edi
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
+WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
 ```
 
 ## SenseNova U1.5

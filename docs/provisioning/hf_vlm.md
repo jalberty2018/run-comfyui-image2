@@ -20,6 +20,24 @@ hf download pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF pe_i2i_heretic-Q8_0.gguf
 --local-dir /workspace/ComfyUI/models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF/
 ```
 
+## Krea-2 Heretic 8B Q6 and official vision projector
+
+### Heretic 8B Q6
+
+```bash
+hf download ThalisAI/Qwen3-VL-8B-Instruct-heretic \
+  Qwen3-VL-8B-Instruct-heretic-Q6_K.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Krea-VLM-Heretic
+```
+
+### Official vision projector
+
+```bash
+hf download Qwen/Qwen3-VL-8B-Instruct-GGUF \
+  mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Krea-VLM-Heretic
+```
+
 ## Qwen VLM language model
 
 ### Model

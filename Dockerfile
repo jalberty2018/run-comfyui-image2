@@ -196,7 +196,7 @@ RUN set -eux; \
     rm -rf /comfyui-docs
 
 # Copy Scripts and documentation
-COPY --chmod=755 start.sh onworkspace/comfyui-on-workspace.sh onworkspace/files-on-workspace.sh onworkspace/test-on-workspace.sh onworkspace/docs-on-workspace.sh / 
+COPY --chmod=755 start.sh runpod-healthcheck.sh onworkspace/comfyui-on-workspace.sh onworkspace/files-on-workspace.sh onworkspace/test-on-workspace.sh onworkspace/docs-on-workspace.sh / 
 COPY --chmod=664 /documentation/README.md /README.md
 COPY --chmod=644 test/ /test
 COPY --chmod=644 docs/ /docs

@@ -4,10 +4,6 @@ Generate and edit images with Krea-2 Base or the Turbo LoRA in ComfyUI. Models, 
 
 **Uncensored Qwen-VL:** this template includes an abliterated Qwen3-VL-4B model without an additional prompt-filtering layer. The same model supports both Krea-2 inference and visual prompt enhancement. Users remain responsible for model use and generated content.
 
-## Purpose-built and cost-efficient
-
-This template downloads only the Krea-2 models and tools required for its workflows. Qwen-VL is already required as the Krea-2 text encoder, so prompt enhancement does not require a second large language-model download. If you write prompts yourself, use a standard workflow; the Qwen-VL encoder remains required for inference.
-
 ## Is this the right template?
 
 Choose this template to:
@@ -22,8 +18,6 @@ Choose this template to:
 | Mode | What Qwen-VL does | Extra model download |
 |---|---|---|
 | **Krea-2 inference** | Encodes your prompt for image generation | No; required component |
-| **Prompt enhancement** | Analyzes text or images and creates a richer prompt | No; reuses the same model |
-| **No enhancement** | Standard workflows use your own prompt directly | No; the encoder is still used for inference |
 
 High-VRAM profiles use the uncensored `qwen3-vl-4b-instruct-abliterated` encoder. Low-VRAM profiles use its FP8-scaled abliterated variant.
 
