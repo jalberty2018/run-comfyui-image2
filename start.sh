@@ -356,7 +356,6 @@ run_wget_download() {
     fi
     printf '%s\n' "$output"
     report_download_space_error "$output" || true
-    wget -q --timeout=5 --tries=1 -O /dev/null "https://provisioning.rozenlaan.site/image2/++wget-no-space-left-${BUILD_TAG}.json" || true
     return "$exit_code"
 }
 
