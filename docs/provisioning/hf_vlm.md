@@ -38,26 +38,6 @@ hf download Qwen/Qwen3-VL-8B-Instruct-GGUF \
   --local-dir /workspace/ComfyUI/models/LLM/Krea-VLM-Heretic
 ```
 
-## Qwen VLM language model
-
-### Model
-
-```bash
-hf download mradermacher/Qwen3.8-27B-Uncensored-FP8-GGUF \
-  Qwen3.8-27B-Uncensored-FP8.Q2_K.gguf \
-  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
-```
-
-### Matching vision projector
-
-The F16 projector comes from the matching base-model repository:
-
-```bash
-hf download unsloth/Qwen3.8-27B-GGUF \
-  mmproj-F16.gguf \
-  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
-```
-
 ## TinyLlama test model
 
 ```bash
