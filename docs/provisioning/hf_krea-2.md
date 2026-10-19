@@ -119,8 +119,6 @@ hf download thedeoxen/Krea-2-pose-controlnet krea2_turbo_openpose_controlnet.saf
 --local-dir /workspace/ComfyUI/models/loras/
 ```
 
-Use the `pose_image` output from OpenPose 3D Poser as image 1 in the Krea2 Ostris Edit text encoder, with `kv_cache` enabled. Both node packs are included in Image2. Load this file as a LoRA (recommended strength 0.8–1.0), not as a standalone ControlNet model. The upstream example uses Krea2 Turbo, approximately 10 steps, CFG 1.0 and `euler` / `simple`.
-
 ### Krea2 AnyPaint rank 32
 
 ```bash
@@ -128,10 +126,17 @@ hf download yijunwang2/krea2-anypaint krea2_anypaint_rank32.safetensors \
 --local-dir /workspace/ComfyUI/models/loras/
 ```
 
-### krea2-identity-edit
+### Krea2 General Edit v2 rank 128
 
 ```bash
-hf download conradlocke/krea2-identity-edit krea2_identity_edit_v1_2_r128.safetensors \
+hf download conradlocke/krea2-identity-edit krea2_general_edit_v2_r128.safetensors \
+--local-dir /workspace/ComfyUI/models/loras/
+```
+
+### Krea2 Identity Edit v2 rank 128
+
+```bash
+hf download conradlocke/krea2-identity-edit krea2_identity_edit_v2_r128.safetensors \
 --local-dir /workspace/ComfyUI/models/loras/
 ```
 

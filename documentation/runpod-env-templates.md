@@ -1,8 +1,30 @@
 # Environment variables templates
 
-## Krea-2
+## MOSS-Image
 
-Both templates provision the OpenPose LoRA as `HF_MODEL_LORA8`. For pose control, connect OpenPose 3D Poser's `pose_image` to image 1 of Krea2 Ostris Edit and enable `kv_cache`. The LoRA is downloaded automatically; select it in the pose workflow to apply it.
+### Private SFT + Base INT8 ConvRot
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MOSS-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/moss_image_sft_int8_convrot.safetensors
+HF_MODEL_DIFFUSION_MODELS2=Comfy-Org/MOSS-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME2=diffusion_models/moss_image_base_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MOSS-Image
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3.5_9b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=DarkRomeo88/Qwen3.5-9B-uncensored-heretic-ComfyUI
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5_9b_uncensored_int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/MOSS-Image
+HF_MODEL_VAE_FILENAME1=vae/flux2-vae_small.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i.json
+WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i_bboxes.json
+WORKFLOW4=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i_bboxes.json
+```
+
+## Krea-2
 
 ### Public Raw + turbo-lora
 
@@ -40,15 +62,15 @@ HF_MODEL_LORA9=conradlocke/krea2-identity-edit
 HF_MODEL_LORA_FILENAME9=krea2_identity_edit_v2_r128.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
-WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
-WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
-WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
-WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
-WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
-WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
-WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
-WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-1-reference-edit-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-2-reference-edit-pod.json
+WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-references-pod.json
 ```
 
 ### Private Raw + turbo-lora + bf16
@@ -77,8 +99,8 @@ HF_MODEL_LORA3=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME3=krea2filterbypass3.safetensors
 HF_MODEL_LORA4=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME4=fedor_bypass.safetensors
-HF_MODEL_LORA5=krea2_general_edit_v2_r128.safetensors
-HF_MODEL_LORA_FILENAME5=krea2_identity_edit_v1_2_r128.safetensors
+HF_MODEL_LORA5=conradlocke/krea2-identity-edit
+HF_MODEL_LORA_FILENAME5=krea2_general_edit_v2_r128.safetensors
 HF_MODEL_LORA6=LS110824/krea2_lora
 HF_MODEL_LORA_FILENAME6=Krea2_TextFusion_Refusal_Reduction.safetensors
 HF_MODEL_LORA7=yijunwang2/krea2-anypaint
@@ -89,15 +111,15 @@ HF_MODEL_LORA9=conradlocke/krea2-identity-edit
 HF_MODEL_LORA_FILENAME9=krea2_identity_edit_v2_r128.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-2-pod.json
-WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-vlm-artist-pod.json
-WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
-WORKFLOW5=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-edit-pod.json
-WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
-WORKFLOW7=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
-WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-composition.pod.json
-WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
-WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-style-transfer-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-ostris-edit-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/JoyCaption-i2t-pod.json
+WORKFLOW6=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-prompt-enhance-pod.json
+WORKFLOW7=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-prompt-enhance-pod.json
+WORKFLOW8=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-t2i-ostris-controlnet-pod.json
+WORKFLOW9=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-1-reference-edit-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-i2i-2-reference-edit-pod.json
+WORKFLOW11=https://provisioning.rozenlaan.site/image2/Krea-2-turbo-references-pod.json
 ```
 
 ## SenseNova U1.5

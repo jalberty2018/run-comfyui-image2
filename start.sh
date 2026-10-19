@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build tag
-export BUILD_TAG=17102026
+export BUILD_TAG=19102026
 
 # Generate a fresh identifier for this script execution, including container restarts.
 echo "▶️ Pod run-comfyui-image2 started"
@@ -392,6 +392,7 @@ run_hf_download() {
 
     echo "ℹ️ [DOWNLOAD] Stall watchdog: ${stall_timeout}s"
     echo "ℹ️ [DOWNLOAD] Kill grace period: ${kill_after}s"
+    echo "ℹ️ [DOWNLOAD] Updated every 5s"
 
     # Safely quote all arguments passed to: hf download
     # Force human output so progress bars remain enabled when the command is
