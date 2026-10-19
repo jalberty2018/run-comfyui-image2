@@ -20,6 +20,28 @@ hf download pottokao/Qwen-Image-2.1-PE-I2I-Heretic-GGUF pe_i2i_heretic-Q8_0.gguf
 --local-dir /workspace/ComfyUI/models/LLM/Qwen-Image-2.1-PE-I2I-Heretic-GGUF/
 ```
 
+## FLUX 3 Klein Heretic DHQ Q4_K_M and F16 vision projector
+
+Source: [pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF](https://huggingface.co/pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF).
+
+The private FLUX 3 Klein template places both files in `models/LLM/Flux-VLM-Heretic` for llama.cpp. Select the model GGUF and its matching `mmproj` file in your llama.cpp loader for image input.
+
+### Heretic DHQ Q4_K_M
+
+```bash
+hf download pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF \
+  flux3-klein-te-heretic-dhq-Q4_K_M.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Flux-VLM-Heretic
+```
+
+### F16 vision projector
+
+```bash
+hf download pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF \
+  mmproj-flux3-klein-te-heretic-dhq-f16.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Flux-VLM-Heretic
+```
+
 ## Krea-2 Heretic 8B Q6 and official vision projector
 
 ### Heretic 8B Q6

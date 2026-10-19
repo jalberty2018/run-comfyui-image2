@@ -1,5 +1,37 @@
 # Environment variables templates
 
+## FLUX 3 Image Klein
+
+### Private Base + Distilled INT8 ConvRot
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+HF_MODEL_FILE1=pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF
+HF_MODEL_FILE_FILENAME1=flux3-klein-te-heretic-dhq-Q4_K_M.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Flux-VLM-Heretic
+HF_MODEL_FILE2=pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF
+HF_MODEL_FILE_FILENAME2=mmproj-flux3-klein-te-heretic-dhq-f16.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Flux-VLM-Heretic
+HF_MODEL_DIFFUSION_MODELS1=black-forest-labs/flux-3-image-klein-comfy
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/flux3-image-klein-base-int8-convrot.safetensors
+HF_MODEL_DIFFUSION_MODELS2=black-forest-labs/flux-3-image-klein-comfy
+HF_MODEL_DIFFUSION_MODELS_FILENAME2=diffusion_models/flux3-image-klein-int8-convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=black-forest-labs/flux-3-image-klein-comfy
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_4b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=black-forest-labs/flux-3-image-klein-comfy
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_flux3_prompt_upsampler_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS3=pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF
+HF_MODEL_TEXT_ENCODERS_FILENAME3=flux3-klein-te-heretic-bf16.safetensors
+HF_MODEL_VAE1=black-forest-labs/flux-3-image-klein-comfy
+HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_distilled_t2i.json
+WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_image_edit.json
+WORKFLOW4=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_distilled_image_edit.json
+```
+
 ## MOSS-Image
 
 ### Private SFT + Base INT8 ConvRot
@@ -17,7 +49,7 @@ HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3.5_9b_int8_convrot.safetenso
 HF_MODEL_TEXT_ENCODERS2=DarkRomeo88/Qwen3.5-9B-uncensored-heretic-ComfyUI
 HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5_9b_uncensored_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MOSS-Image
-HF_MODEL_VAE_FILENAME1=vae/flux2-vae_small.safetensors
+HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
 WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i.json
 WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i.json
 WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i_bboxes.json
