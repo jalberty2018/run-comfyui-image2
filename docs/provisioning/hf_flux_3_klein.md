@@ -4,13 +4,10 @@
 
 - [Official ComfyUI guide](https://docs.comfy.org/tutorials/flux/flux-3-klein)
 - [Official ComfyUI model files](https://huggingface.co/black-forest-labs/flux-3-image-klein-comfy)
-- [Private RunPod environment template](../../documentation/runpod-env-templates.md#flux-3-image-klein)
 
 ## Requirements
 
-Use an up-to-date ComfyUI with FLUX 3 Klein support (0.41.1 or later). Accept the license and obtain access on the model repository page using the account associated with your Hugging Face token. The commands below use the pod's existing `HF_TOKEN`; if it is not set, authenticate interactively with `hf auth login` first.
-
-The official model downloads preserve the repository's model subdirectories under `/workspace/ComfyUI/models/`. The Heretic encoder is downloaded directly into `models/text_encoders/` because its file is at the repository root.
+Accept the license and obtain access on the model repository page using the account associated with your Hugging Face token. The commands below use the pod's existing `HF_TOKEN`; if it is not set, authenticate interactively with `hf auth login` first.
 
 ## Diffusion models
 
