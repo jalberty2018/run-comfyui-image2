@@ -130,38 +130,6 @@ else
     echo "⚠️ WARNING: No GPU available, Code Server not started to limit memory use"
 fi
 
-# Check whether NVIDIA VFX can actually process a frame before starting ComfyUI.
-echo "ℹ️  Checking NVIDIA VFX GPU processing"
-
-export HAS_NVIDIA_VFX=0
-if [[ "$HAS_CUDA" -eq 1 ]]; then
-    if timeout --kill-after=10s 120s python -u - <<'PY'
-import torch
-import nvvfx
-
-torch.cuda.set_device(0)
-with torch.inference_mode(), torch.cuda.device(0):
-    frame = torch.rand(3, 256, 256, device="cuda:0")
-    with nvvfx.VideoSuperRes(
-        quality=nvvfx.QualityLevel.HIGH,
-        device=0,
-        image_encoding=nvvfx.ImageEncoding.RGB8,
-    ) as effect:
-        effect.output_width = 512
-        effect.output_height = 512
-        effect.load()
-        result = torch.from_dlpack(effect.run(frame).image).clone()
-        torch.cuda.synchronize(0)
-        if tuple(result.shape) != (3, 512, 512):
-            raise RuntimeError(f"Unexpected output shape: {result.shape}")
-        if not torch.isfinite(result).all().item():
-            raise RuntimeError("Output contains NaN or infinite values")
-PY
-    then
-        export HAS_NVIDIA_VFX=1
-    fi
-fi
-
 # provisioning Models and loras CIVITAI
 if [[ "$HAS_CUDA" -eq 1 ]]; then
 
@@ -1211,15 +1179,6 @@ else
 fi
 
 echo "📘 Tutorial: https://comfyui.rozenlaan.site/ComfyUI_tutorial/"
-
-# Report the NVIDIA VFX result recorded before provisioning.
-echo "ℹ️  NVIDIA VFX GPU processing status"
-
-if [[ "${HAS_NVIDIA_VFX:-0}" == "1" ]]; then
-    echo "✅ NVIDIA VFX Super Resolution is available on this host."
-else
-    echo "⚠️: NVIDIA VFX GPU processing test failed on this host. See the pod logs for details." >&2
-fi
 
 echo "ℹ️ llama-cpp-python check"
 
