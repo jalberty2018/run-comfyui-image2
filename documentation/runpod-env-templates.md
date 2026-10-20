@@ -2,6 +2,26 @@
 
 ## FLUX 3 Image Klein
 
+### Public Base + Distilled INT8 ConvRot
+
+```bash
+HF_MODEL_FILE1=pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF
+HF_MODEL_FILE_FILENAME1=flux3-klein-te-heretic-dhq-Q4_K_M.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Flux-VLM-Heretic
+HF_MODEL_FILE2=pottokao/FLUX.3-Klein-Text-Encoder-Heretic-DHQ-GGUF
+HF_MODEL_FILE_FILENAME2=mmproj-flux3-klein-te-heretic-dhq-f16.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Flux-VLM-Heretic
+HF_MODEL_DIFFUSION_MODELS1=LS110824/Flux3
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=flux3-image-klein-int8-convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=LS110824/text_encoders
+HF_MODEL_TEXT_ENCODERS_FILENAME1=flux3-klein-te-heretic-int8-convrot.safetensors
+HF_MODEL_VAE1=LS110824/vae
+HF_MODEL_VAE_FILENAME1=flux2-vae.safetensors
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-bbox-prompt-upscaler-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-prompt-upscaler-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-upscaler-pod.json
+```
+
 ### Private Base + Distilled INT8 ConvRot
 
 ```bash

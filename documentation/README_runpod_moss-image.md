@@ -41,7 +41,7 @@ Select the encoder required by the loaded workflow in its model loader.
 
 ## Hardware and storage
 
-ested on **NVIDIA RTX 3090/4090, PRO 6000 MiG 24 Gb** with **60 GB of volume storage**.
+Tested on **NVIDIA RTX 3090/4090, PRO 6000 MiG 24 Gb** with **60 GB of volume storage**.
 
 ## Optional configuration
 
