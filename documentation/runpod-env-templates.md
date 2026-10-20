@@ -20,10 +20,9 @@ HF_MODEL_TEXT_ENCODERS1=LS110824/text_encoders
 HF_MODEL_TEXT_ENCODERS_FILENAME1=flux3-klein-te-heretic-int8-convrot.safetensors
 HF_MODEL_VAE1=LS110824/vae
 HF_MODEL_VAE_FILENAME1=flux2-vae.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_distilled_t2i.json
-WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_image_edit.json
-WORKFLOW4=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_flux3_klein_distilled_image_edit.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-bbox-prompt-upscaler-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-prompt-upscaler-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-upscaler-pod.json
 ```
 
 ## MOSS-Image
@@ -40,8 +39,8 @@ HF_MODEL_DIFFUSION_MODELS2=Comfy-Org/MOSS-Image
 HF_MODEL_DIFFUSION_MODELS_FILENAME2=diffusion_models/moss_image_base_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MOSS-Image
 HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3.5_9b_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=DarkRomeo88/Qwen3.5-9B-uncensored-heretic-ComfyUI
-HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5_9b_uncensored_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=DrHippie/qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MOSS-Image
 HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
 WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i.json
@@ -49,6 +48,8 @@ WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/te
 WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i_bboxes.json
 WORKFLOW4=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i_bboxes.json
 ```
+
+
 
 ## Krea-2
 
