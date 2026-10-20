@@ -32,8 +32,9 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 ### Runpod templates
 
 - 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
-- 👉 [Qwen Image 2.1](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)
+- 👉 [Flux 3 Image Klein](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)
 - 👉 [Qwen Image 2.1 + prompt enhancer](https://console.runpod.io/hub/template/m3upcvmvw4?ref=se4tkc5o)
+- 👉 [MOSS-Image](https://console.runpod.io/deploy?template=3fri17sxaa&ref=se4tkc5o)
 
 ### Documentation
 
