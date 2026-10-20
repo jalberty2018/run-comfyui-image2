@@ -2,8 +2,6 @@
 
 Run Qwen-Image 2.1 for text-to-image and image editing with the image2 container. Models and the supplied Qwen workflows download when the pod starts.
 
-See also the [version without prompt enhancer](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o).
-
 ## Included models
 
 | Total VRAM (whole GiB) | Profile | Diffusion | Text encoders |

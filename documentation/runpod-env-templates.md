@@ -27,6 +27,24 @@ WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-ups
 
 ## MOSS-Image
 
+### Public SFT + Base INT8 ConvRot
+
+```bash
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MOSS-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/moss_image_sft_int8_convrot.safetensors
+HF_MODEL_DIFFUSION_MODELS2=Comfy-Org/MOSS-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME2=diffusion_models/moss_image_base_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MOSS-Image
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3.5_9b_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=DrHippie/qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot
+HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/MOSS-Image
+HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
+```
+
 ### Private SFT + Base INT8 ConvRot
 
 ```bash
@@ -43,13 +61,10 @@ HF_MODEL_TEXT_ENCODERS2=DrHippie/qwen3.5-9b_abliterated_0x100refusal_vision_int8
 HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MOSS-Image
 HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i.json
-WORKFLOW3=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_t2i_bboxes.json
-WORKFLOW4=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_moss_image_base_t2i_bboxes.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
 ```
-
-
 
 ## Krea-2
 
