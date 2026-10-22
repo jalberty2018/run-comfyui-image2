@@ -63,6 +63,7 @@ HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-image-encoder-pod.json
 ```
 
 ### Private SFT + Base INT8 ConvRot
@@ -84,6 +85,7 @@ HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
+WORKFLOW4=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-image-encoder-pod.json
 ```
 
 ## Krea-2
