@@ -28,8 +28,6 @@ hf download Comfy-Org/MOSS-Image diffusion_models/moss_image_base_int8_convrot.s
 
 ### Optional BF16 alternatives
 
-These require more VRAM. After downloading, select the corresponding BF16 file in the workflow's `UNET Loader` inside the subgraph.
-
 ```bash
 hf download Comfy-Org/MOSS-Image diffusion_models/moss_image_sft_bf16.safetensors \
 --local-dir /workspace/ComfyUI/models/
@@ -59,4 +57,29 @@ hf download DarkRomeo88/Qwen3.5-9B-uncensored-heretic-ComfyUI qwen3.5_9b_uncenso
 ```bash
 hf download Comfy-Org/MOSS-Image vae/flux2-vae_small.safetensors \
 --local-dir /workspace/ComfyUI/models/
+```
+
+## LoRAs
+
+### Color depth control
+
+```bash
+hf download Comfy-Org/MOSS-Image loras/moss_image_color_depth_control.safetensors \
+--local-dir /workspace/ComfyUI/models/
+```
+
+### Edit LoRA (rank 64, BF16)
+
+```bash
+hf download Comfy-Org/MOSS-Image loras/moss_image_edit_lora_rank_64_bf16.safetensors \
+--local-dir /workspace/ComfyUI/models/
+```
+
+### Edit lora HQ armV3 and HQ armV5
+
+```bash
+hf download akhaliq/MOSS-Image-Edit-HQ weights/armV3/armV3.safetensors --local-dir /tmp/hq && \
+  mv /tmp/hq/weights/armV3/armV3.safetensors ComfyUI/models/loras/moss_image_edit_hq_armV3.safetensors
+hf download akhaliq/MOSS-Image-Edit-HQ weights/armV5/armV5.safetensors --local-dir /tmp/hq && \
+  mv /tmp/hq/weights/armV5/armV5.safetensors ComfyUI/models/loras/moss_image_edit_hq_armV5.safetensors
 ```

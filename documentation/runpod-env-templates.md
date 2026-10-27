@@ -45,6 +45,26 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-prompt-ups
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-upscaler-pod.json
 ```
 
+## Fibo Image
+
+### Private Dev INT8 ConvRot + Turbo LoRA
+
+Manual downloads: [Fibo Image provisioning](../docs/provisioning/hf_fibo_image.md).
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/Fibo-2.0
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/fibo2_dev_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/Fibo-2.0
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_4b_int8_convrot.safetensors
+HF_MODEL_VAE1=Comfy-Org/Fibo-2.0
+HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
+HF_MODEL_LORA1=Comfy-Org/Fibo-2.0
+HF_MODEL_LORA_FILENAME1=loras/fibo_2.0_turbo_lora_avg_rank_270_bf16.safetensors
+```
+
 ## MOSS-Image
 
 ### Public SFT + Base INT8 ConvRot
@@ -60,10 +80,15 @@ HF_MODEL_TEXT_ENCODERS2=DrHippie/qwen3.5-9b_abliterated_0x100refusal_vision_int8
 HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MOSS-Image
 HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
+HF_MODEL_LORA1=Comfy-Org/MOSS-Image
+HF_MODEL_LORA_FILENAME1=loras/moss_image_color_depth_control.safetensors
+HF_MODEL_LORA2=Comfy-Org/MOSS-Image
+HF_MODEL_LORA_FILENAME2=loras/moss_image_edit_lora_rank_64_bf16.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
 WORKFLOW4=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-image-encoder-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/Moss-Image-i2i-standard-pod.json
 ```
 
 ### Private SFT + Base INT8 ConvRot
@@ -82,10 +107,15 @@ HF_MODEL_TEXT_ENCODERS2=DrHippie/qwen3.5-9b_abliterated_0x100refusal_vision_int8
 HF_MODEL_TEXT_ENCODERS_FILENAME2=qwen3.5-9b_abliterated_0x100refusal_vision_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MOSS-Image
 HF_MODEL_VAE_FILENAME1=vae/flux2-vae.safetensors
+HF_MODEL_LORA1=Comfy-Org/MOSS-Image
+HF_MODEL_LORA_FILENAME1=loras/moss_image_color_depth_control.safetensors
+HF_MODEL_LORA2=Comfy-Org/MOSS-Image
+HF_MODEL_LORA_FILENAME2=loras/moss_image_edit_lora_rank_64_bf16.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/Moss-image-i2i-ostris-edit-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/Moss-image-t2i-bbox-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-vlm-pod.json
 WORKFLOW4=https://provisioning.rozenlaan.site/image2/Moss-Image-t2i-image-encoder-pod.json
+WORKFLOW5=https://provisioning.rozenlaan.site/image2/Moss-Image-i2i-standard-pod.json
 ```
 
 ## Krea-2

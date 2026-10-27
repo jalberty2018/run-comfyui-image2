@@ -114,7 +114,16 @@ RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clon
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/ostris/ComfyUI-MOSS-Image-Ostris-Edit.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-MOSSImageTextEncoder.git
 RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/jalberty2018/ComfyUI-Phrase-Weight-Conditioning
-RUN set -eux; GIT_TERMINAL_PROMPT=0 git -c http.version="$GIT_HTTP_VERSION" clone --depth=1 https://github.com/PedroMarinhoDev/ComfyUI-Moss-Image-Edit-Native.git
+# Skip documentation and example media in both the checkout and Git downloads.
+RUN set -eux; \
+    export GIT_TERMINAL_PROMPT=0; \
+    git -c http.version="$GIT_HTTP_VERSION" clone \
+      --depth=1 --filter=blob:none --no-checkout \
+      https://github.com/PedroMarinhoDev/ComfyUI-Moss-Image-Edit-Native.git; \
+    git -C ComfyUI-Moss-Image-Edit-Native -c http.version="$GIT_HTTP_VERSION" \
+      sparse-checkout set --no-cone \
+      '/*' '!/assets/' '!/docs/findings/' '!/docs/samples/' '!/example_inputs/' '!/example_workflows/*.jpg'; \
+    git -C ComfyUI-Moss-Image-Edit-Native -c http.version="$GIT_HTTP_VERSION" checkout
 
 # Skip README media and example workflows; retain preprocessor code and assets.
 RUN set -eux; \
