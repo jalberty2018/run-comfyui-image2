@@ -315,7 +315,7 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pose-pod.json
 ```
 
 ### Private
@@ -361,5 +361,5 @@ WORKFLOW6=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-pod
 WORKFLOW7=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-pod.json
 WORKFLOW8=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-t2i-prompt-enhancer-pod.json
 WORKFLOW9=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-turbo-i2i-prompt-enhancer-pod.json
-WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pod.json
+WORKFLOW10=https://provisioning.rozenlaan.site/image2/QWEN-Image-21-i2i-controlnet-pose-pod.json
 ```
