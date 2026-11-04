@@ -45,6 +45,51 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-prompt-ups
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-upscaler-pod.json
 ```
 
+## P-H3-Image
+
+### Public LVRAM W4A8 / HVRAM INT8 ConvRot + INT8 ConvRot VAE + BF16 prompt upsampler
+
+```bash
+VRAM_THRESHOLD=32
+HF_MODEL_HVRAM_DIFFUSION_MODELS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/p-h3-image_int8_convrot.safetensors
+HF_MODEL_HVRAM_TEXT_ENCODERS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/p-h3-image_text_encoder_int8_convrot.safetensors
+HF_MODEL_LVRAM_DIFFUSION_MODELS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/p-h3-image_w4a8.safetensors
+HF_MODEL_LVRAM_TEXT_ENCODERS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_LVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/p-h3-image_text_encoder_w4a8.safetensors
+HF_MODEL_TEXT_ENCODERS2=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/p-h3-image_prompt_upsampler_bf16.safetensors
+HF_MODEL_VAE1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_VAE_FILENAME1=vae/p-h3-image_vae_int8_convrot.safetensors
+WORKFLOW1=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_text_to_image.json
+WORKFLOW2=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_edit.json
+```
+
+### Private LVRAM W4A8 / HVRAM INT8 ConvRot + INT8 ConvRot VAE + BF16 prompt upsampler
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+VRAM_THRESHOLD=32
+HF_MODEL_HVRAM_DIFFUSION_MODELS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_HVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/p-h3-image_int8_convrot.safetensors
+HF_MODEL_HVRAM_TEXT_ENCODERS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_HVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/p-h3-image_text_encoder_int8_convrot.safetensors
+HF_MODEL_LVRAM_DIFFUSION_MODELS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_LVRAM_DIFFUSION_MODELS_FILENAME1=diffusion_models/p-h3-image_w4a8.safetensors
+HF_MODEL_LVRAM_TEXT_ENCODERS1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_LVRAM_TEXT_ENCODERS_FILENAME1=text_encoders/p-h3-image_text_encoder_w4a8.safetensors
+HF_MODEL_TEXT_ENCODERS2=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/p-h3-image_prompt_upsampler_bf16.safetensors
+HF_MODEL_VAE1=PrunaAI/P-H3-Image-Comfy
+HF_MODEL_VAE_FILENAME1=vae/p-h3-image_vae_int8_convrot.safetensors
+WORKFLOW1=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_text_to_image.json
+WORKFLOW2=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_edit.json
+```
+
 ## Fibo Image
 
 ### Private Dev INT8 ConvRot + Turbo LoRA
