@@ -65,8 +65,8 @@ HF_MODEL_VAE1=PrunaAI/P-H3-Image-Comfy
 HF_MODEL_VAE_FILENAME1=vae/p-h3-image_vae_int8_convrot.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-WORKFLOW1=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_text_to_image.json
-WORKFLOW2=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_edit.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/p-h3-image-i2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/p-h3-image-t2i-pod.json
 ```
 
 ### Private LVRAM W4A8 / HVRAM INT8 ConvRot + INT8 ConvRot VAE + BF16 prompt upsampler
@@ -94,8 +94,8 @@ HF_MODEL_LORA2=Alissonerdx/Minimax-H3-ComfyUI
 HF_MODEL_LORA_FILENAME2=loras/minimax_h3_lms_v1.0_r64.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-WORKFLOW1=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_text_to_image.json
-WORKFLOW2=https://huggingface.co/PrunaAI/P-H3-Image-Comfy/resolve/main/workflows/p-h3-image_edit.json
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/p-h3-image-i2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/p-h3-image-t2i-pod.json
 ```
 
 ## Fibo Image

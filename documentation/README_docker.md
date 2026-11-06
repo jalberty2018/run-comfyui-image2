@@ -18,6 +18,7 @@
 | **FLux 3 Image Klein** | Text-to-image and image editing with INT8 ConvRot models, heretic decoder and VLM prompt expander | [**Deploy Flux 3 Image Klein →**](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o) |
 | **Qwen-Image 2.1 with prompt enhancer** | Text-to-image and image editing with the same image models plus Qwen3.5 9B prompt enhancers | [**Deploy Qwen-Image 2.1 + prompt enhancer →**](https://console.runpod.io/hub/template/g8ow1s1s0a?ref=se4tkc5o) |
 | **MOSS-Image** | text-to-image generation | [**Deploy Moss-Image →**](https://console.runpod.io/deploy?template=3fri17sxaa&ref=se4tkc5o) |
+| **P-H3-Image PrunaAI** | Image editing based on Minimax H3 | [**P-H3-Image →**](https://console.runpod.io/hub/template/9i0lkwau54?ref=se4tkc5o) |
 
 ## Documentation and help
 
