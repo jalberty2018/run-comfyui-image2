@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build tag
-export BUILD_TAG=04112026
+export BUILD_TAG=06112026
 
 # Generate a fresh identifier for this script execution, including container restarts.
 echo "▶️ Pod run-comfyui-image2 started"
