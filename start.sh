@@ -622,7 +622,6 @@ download_model_HF() {
     # ----------- SUCCESS ----------
     if [[ $rc -eq 0 ]]; then
         echo "✅ HF download completed"
-        sleep 1
         return 0
     fi
 
@@ -689,7 +688,6 @@ download_generic_HF() {
     # ----------- SUCCESS ----------
     if [[ $rc -eq 0 ]]; then
         echo "✅ HF download completed"
-        sleep 1
         return 0
     fi
 

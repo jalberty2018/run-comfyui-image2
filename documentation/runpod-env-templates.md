@@ -69,6 +69,7 @@ HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/p-h3-image-i2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/p-h3-image-t2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/p-h3-image-character-sheet-pod.json
 ```
 
 ### Private LVRAM W4A8 / HVRAM INT8 ConvRot + INT8 ConvRot VAE + BF16 prompt upsampler
@@ -98,6 +99,7 @@ HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/p-h3-image-i2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/p-h3-image-t2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/p-h3-image-character-sheet-pod.json
 ```
 
 ## Fibo Image
