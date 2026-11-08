@@ -49,7 +49,7 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 
 - **PyTorch Runtime**  [![Docker](https://img.shields.io/docker/v/ls250824/pytorch-cuda-ubuntu-runtime)](https://hub.docker.com/r/ls250824/pytorch-cuda-ubuntu-runtime)
 
-- **ComfyUI Runtime**  [![Docker](https://img.shields.io/docker/v/ls250824/comfyui-runtime)](https://hub.docker.com/r/ls250824/comfyui-runtime)
+- **ComfyUI Runtime**  [![Docker](https://img.shields.io/docker/v/ls250824/comfyui-runtime3)](https://hub.docker.com/r/ls250824/comfyui-runtime3)
 
 ### Custom Image
 
