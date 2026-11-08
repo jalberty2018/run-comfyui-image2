@@ -1,5 +1,7 @@
 # P-H3-Image with BF16 prompt upsampler
 
+Image model based on Minimax H3 video model.
+
 Generate and edit images with P-H3-Image in ComfyUI. A W4A8 or INT8 ConvRot diffusion model and matching text encoder, the BF16 prompt upsampler, INT8 ConvRot VAE, approximate VAE and ready-to-use workflows are provisioned automatically.
 
 ## Is this the right template?
@@ -7,13 +9,14 @@ Generate and edit images with P-H3-Image in ComfyUI. A W4A8 or INT8 ConvRot diff
 Choose this template to:
 
 - generate images with the supplied text-to-image workflow;
-- edit images with the supplied image-to-image workflow;
+- edit images or compose scenes with the supplied image-to-image workflow;
+- create character sheets from reference images with the supplied workflow;
 - use the included BF16 prompt upsampler;
 - automatically select W4A8 or INT8 ConvRot models based on available VRAM.
 
 ## Fast deployment
 
-1. Choose an available **GPU**, preferably one marked with an asterisk (*), 48 Gb VRAM works perfect.
+1. Choose an available **GPU**, preferably one marked with an asterisk (*), 24 Gb VRAM works perfect.
 3. Choose the **Volume Disk (Legacy)** mounted at `/workspace`, keep or increase the size if needed.
 4. Enable volume encryption if desired.
 5. Click **Deploy Pod**.
@@ -49,6 +52,7 @@ The prompt upsampler and both VAEs are downloaded for both VRAM profiles.
 |---|---|
 | Image-to-image | `p-h3-image-i2i-pod.json` |
 | Text-to-image | `p-h3-image-t2i-pod.json` |
+| Character sheet design | `p-h3-image-character-sheet-pod.json` |
 
 ## Optional configuration
 
