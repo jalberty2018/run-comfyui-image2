@@ -45,6 +45,46 @@ WORKFLOW2=https://provisioning.rozenlaan.site/image2/Flux-3-klein-i2i-prompt-ups
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-upscaler-pod.json
 ```
 
+## MiniMax-H3-Image
+
+### Public Pruned INT8 ConvRot + FP16 VAE + W4A8 GPTQ prompt expander
+
+```bash
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MiniMax-H3
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen3.5
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_w4a8_gptq.safetensors
+HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
+HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
+HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
+HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_edit.json
+```
+
+### Private Pruned INT8 ConvRot + FP16 VAE + W4A8 GPTQ prompt expander
+
+
+```bash
+HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
+PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
+CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
+HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MiniMax-H3
+HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors
+HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen3.5
+HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_w4a8_gptq.safetensors
+HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
+HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
+HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
+HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
+WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_t2i.json
+WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_edit.json
+```
+
 ## P-H3-Image
 
 ### Public LVRAM W4A8 / HVRAM INT8 ConvRot + INT8 ConvRot VAE + BF16 prompt upsampler
