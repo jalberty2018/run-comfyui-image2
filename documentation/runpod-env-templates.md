@@ -47,25 +47,28 @@ WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-ups
 
 ## MiniMax-H3-Image
 
-### Public Pruned INT8 ConvRot + FP16 VAE + W4A8 GPTQ prompt expander
+### Public Pruned INT8 ConvRot + FP16 VAE
 
 ```bash
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MiniMax-H3
 HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen3.5
-HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_w4a8_gptq.safetensors
 HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_edit.json
+HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
+HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
+HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
+HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-t2i-pod.json
 ```
 
-### Private Pruned INT8 ConvRot + FP16 VAE + W4A8 GPTQ prompt expander
-
+### Private Pruned INT8 ConvRot + FP16 VAE
 
 ```bash
 HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
@@ -73,16 +76,20 @@ PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
 CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS1=Comfy-Org/MiniMax-H3
-HF_MODEL_TEXT_ENCODERS_FILENAME1=text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors
-HF_MODEL_TEXT_ENCODERS2=Comfy-Org/Qwen3.5
-HF_MODEL_TEXT_ENCODERS_FILENAME2=text_encoders/qwen3.5_9b_w4a8_gptq.safetensors
+HF_MODEL_TEXT_ENCODERS1=ethanfel/Qwen3-VL-32B-Ultra-Heretic-MiniMax-H3-ComfyUI-INT8-ConvRot
+HF_MODEL_TEXT_ENCODERS_FILENAME1=qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors
 HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-WORKFLOW1=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_t2i.json
-WORKFLOW2=https://raw.githubusercontent.com/Comfy-Org/workflow_templates/main/templates/image_minimax_h3_image_edit.json
+HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
+HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
+HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
+HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
+HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
+HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
+WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json
+WORKFLOW2=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-t2i-pod.json
 ```
 
 ## P-H3-Image

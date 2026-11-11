@@ -27,10 +27,11 @@ A streamlined and automated environment for running **ComfyUI** with **image mod
 
 ### Deployment
 
-- All available templates on runpod are tested on a RTX 6000,5000,4500, 3500
+- All available templates on runpod are tested on a RTX 6000,5000,4500, 3500, 6000 MiG 24Gb
 
 ### Runpod templates
 
+- 👉 [Minimax-H3-Image template on runpod](https://console.runpod.io/hub/template/8nl523gts5?ref=se4tkc5o)
 - 👉 [P-H3-Image](https://console.runpod.io/hub/template/9i0lkwau54?ref=se4tkc5o)
 - 👉 [Krea-2 Base and Turbo](https://console.runpod.io/deploy?template=e2hlyrm22l&ref=se4tkc5o)
 - 👉 [Flux 3 Image Klein](https://console.runpod.io/hub/template/l9es28w20d?ref=se4tkc5o)

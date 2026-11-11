@@ -60,6 +60,22 @@ hf download Qwen/Qwen3-VL-8B-Instruct-GGUF \
   --local-dir /workspace/ComfyUI/models/LLM/Krea-VLM-Heretic
 ```
 
+## Qwen VLM language model used for Mininimax H3
+
+- This model is not specific designed for minimax.
+
+```bash
+hf download theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF \
+  qwen3.8-27b-uncensored-fp8-q4_k_m.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
+```
+
+```bash
+hf download unsloth/Qwen3.8-27B-GGUF \
+  mmproj-F16.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
+```
+
 ## TinyLlama test model
 
 ```bash
