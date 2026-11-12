@@ -66,6 +66,7 @@ HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
 HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-t2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-character-sheet-pod.json
 ```
 
 ### Private Pruned INT8 ConvRot + FP16 VAE
@@ -92,6 +93,7 @@ HF_MODEL_LORA1=LS110824/minimax
 HF_MODEL_LORA_FILENAME1=MMH3-RealismSlider-V1.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-t2i-pod.json
+WORKFLOW3=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-character-sheet-pod.json
 ```
 
 ## P-H3-Image
