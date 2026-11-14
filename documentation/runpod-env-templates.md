@@ -47,9 +47,12 @@ WORKFLOW3=https://provisioning.rozenlaan.site/image2/Flux-3-klein-t2i-prompt-ups
 
 ## MiniMax-H3-Image
 
+Both templates use `VRAM_THRESHOLD=32`: above 32 GiB, provision the existing Qwen3.8 model and projector via `HF_MODEL_HVRAM_FILE1/2`; at 32 GiB or below, provision Heretic 8B Q6 and the official vision projector via `HF_MODEL_LVRAM_FILE1/2` into `/workspace/ComfyUI/models/LLM/Qwen3-VL-8B-Instruct-Heretic`.
+
 ### Public Pruned INT8 ConvRot + FP16 VAE
 
 ```bash
+VRAM_THRESHOLD=32
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=ethanfel/Qwen3-VL-32B-Ultra-Heretic-MiniMax-H3-ComfyUI-INT8-ConvRot
@@ -58,12 +61,18 @@ HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
-HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
-HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
-HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
-HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
-HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
+HF_MODEL_HVRAM_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
+HF_MODEL_HVRAM_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
+HF_MODEL_HVRAM_FILE_DIR1=models/LLM/Qwen3.8
+HF_MODEL_HVRAM_FILE2=unsloth/Qwen3.8-27B-GGUF
+HF_MODEL_HVRAM_FILE_FILENAME2=mmproj-F16.gguf
+HF_MODEL_HVRAM_FILE_DIR2=models/LLM/Qwen3.8
+HF_MODEL_LVRAM_FILE1=ThalisAI/Qwen3-VL-8B-Instruct-heretic
+HF_MODEL_LVRAM_FILE_FILENAME1=Qwen3-VL-8B-Instruct-heretic-Q6_K.gguf
+HF_MODEL_LVRAM_FILE_DIR1=models/LLM/Qwen3-VL-8B-Instruct-Heretic
+HF_MODEL_LVRAM_FILE2=Qwen/Qwen3-VL-8B-Instruct-GGUF
+HF_MODEL_LVRAM_FILE_FILENAME2=mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf
+HF_MODEL_LVRAM_FILE_DIR2=models/LLM/Qwen3-VL-8B-Instruct-Heretic
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json
 WORKFLOW2=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-t2i-pod.json
 WORKFLOW3=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-character-sheet-pod.json
@@ -75,6 +84,7 @@ WORKFLOW3=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-char
 HF_TOKEN={{ RUNPOD_SECRET_HF_TOKEN_WRITE }}
 PASSWORD={{ RUNPOD_SECRET_CODE-SERVER-NEW }}
 CIVITAI_TOKEN={{ RUNPOD_SECRET_CivitAI_API_KEY }}
+VRAM_THRESHOLD=32
 HF_MODEL_DIFFUSION_MODELS1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_DIFFUSION_MODELS_FILENAME1=diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors
 HF_MODEL_TEXT_ENCODERS1=ethanfel/Qwen3-VL-32B-Ultra-Heretic-MiniMax-H3-ComfyUI-INT8-ConvRot
@@ -83,12 +93,18 @@ HF_MODEL_VAE1=Comfy-Org/MiniMax-H3-Image
 HF_MODEL_VAE_FILENAME1=vae/minimax_h3_image_vae_fp16.safetensors
 HF_MODEL_VAE_APPROX1=Kijai/MiniMax-H3-TAE
 HF_MODEL_VAE_APPROX_FILENAME1=vae_approx/taeh3.safetensors
-HF_MODEL_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
-HF_MODEL_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
-HF_MODEL_FILE_DIR1=models/LLM/Qwen3.8
-HF_MODEL_FILE2=unsloth/Qwen3.8-27B-GGUF
-HF_MODEL_FILE_FILENAME2=mmproj-F16.gguf
-HF_MODEL_FILE_DIR2=models/LLM/Qwen3.8
+HF_MODEL_HVRAM_FILE1=theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF
+HF_MODEL_HVRAM_FILE_FILENAME1=qwen3.8-27b-uncensored-fp8-q4_k_m.gguf
+HF_MODEL_HVRAM_FILE_DIR1=models/LLM/Qwen3.8
+HF_MODEL_HVRAM_FILE2=unsloth/Qwen3.8-27B-GGUF
+HF_MODEL_HVRAM_FILE_FILENAME2=mmproj-F16.gguf
+HF_MODEL_HVRAM_FILE_DIR2=models/LLM/Qwen3.8
+HF_MODEL_LVRAM_FILE1=ThalisAI/Qwen3-VL-8B-Instruct-heretic
+HF_MODEL_LVRAM_FILE_FILENAME1=Qwen3-VL-8B-Instruct-heretic-Q6_K.gguf
+HF_MODEL_LVRAM_FILE_DIR1=models/LLM/Qwen3-VL-8B-Instruct-Heretic
+HF_MODEL_LVRAM_FILE2=Qwen/Qwen3-VL-8B-Instruct-GGUF
+HF_MODEL_LVRAM_FILE_FILENAME2=mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf
+HF_MODEL_LVRAM_FILE_DIR2=models/LLM/Qwen3-VL-8B-Instruct-Heretic
 HF_MODEL_LORA1=LS110824/minimax
 HF_MODEL_LORA_FILENAME1=MMH3-RealismSlider-V1.safetensors
 WORKFLOW1=https://provisioning.rozenlaan.site/image2/image-minimax-h3-image-i2i-pod.json

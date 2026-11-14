@@ -1,15 +1,15 @@
-# MiniMax-H3-Image with Qwen3.8 prompt expander
+# MiniMax-H3-Image with prompt expander
 
-Generate and edit images with MiniMax-H3-Image in ComfyUI. A pruned INT8 ConvRot diffusion model, INT8 ConvRot text encoder, FP16 VAE, approximate VAE and Qwen3.8 Q4_K_M GGUF prompt expander are provisioned automatically.
+Generate and edit images with MiniMax-H3-Image in ComfyUI. A pruned INT8 ConvRot diffusion model, INT8 ConvRot text encoder, FP16 VAE, approximate VAE and a VRAM-selected GGUF prompt expander with its vision projector are provisioned automatically.
 
 ## Is this the right template?
 
 Choose this template to:
 
-- generate images from text prompts;
-- edit existing images;
-- use the pruned INT8 ConvRot MiniMax-H3-Image model;
-- expand prompts with the included Qwen3.8 model.
+- generate images from text prompts.
+- edit existing images or creating new scenes with multiple references.
+- use the pruned INT8 ConvRot MiniMax-H3-Image model.
+- expand prompts with Qwen3.8-27B-Uncensored or Qwen3-VL-8B-Instruct-Heretic, skills included, selected according to GPU VRAM.
 
 ## Fast deployment
 
@@ -24,21 +24,22 @@ Choose this template to:
 - [Deployment guide](https://comfyui.rozenlaan.site/ComfyUI_image_deployment/)
 - [Start with ComfyUI](https://comfyui.rozenlaan.site/ComfyUI_tutorial/)
 
-## Included models
+## VRAM-based prompt expander (PE) model selection
 
-| Component | Repository | File |
-|---|---|---|
-| Pruned INT8 ConvRot diffusion model | `Comfy-Org/MiniMax-H3-Image` | `diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors` |
-| INT8 ConvRot text encoder | `Comfy-Org/MiniMax-H3` | `text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors` |
-| FP16 VAE | `Comfy-Org/MiniMax-H3-Image` | `vae/minimax_h3_image_vae_fp16.safetensors` |
-| Approximate VAE | `Kijai/MiniMax-H3-TAE` | `vae_approx/taeh3.safetensors` |
-| Qwen3.8 Q4_K_M GGUF prompt expander | `theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF` | `qwen3.8-27b-uncensored-fp8-q4_k_m.gguf` |
-| Qwen3.8 F16 vision projector | `unsloth/Qwen3.8-27B-GGUF` | `mmproj-F16.gguf` |
+| GPU VRAM | Selection | Prompt expander | Vision projector |
+|---|---|---|---|
+| Above 32 GiB | HVRAM | Qwen3.8 27B Uncensored Q4_K_M | Qwen3.8 F16 |
+| 32 GiB or below | LVRAM | Qwen3-VL-8B-Instruct-Heretic Q6_K | Qwen3-VL-8B Q8_0 |
+
+**Both models work on a 24 GB GPU**, but the larger HVRAM model, normally used for video prompts, causes memory swapping.
+The default threshold selects the smaller LVRAM model for a 24 GB GPU.
+To choose a different model, change `VRAM_THRESHOLD` in the RunPod template before deployment. For example, on a 24 GB GPU, use `VRAM_THRESHOLD=20` to select HVRAM, or keep `VRAM_THRESHOLD=32` to select LVRAM.
 
 ## Optional configuration
 
 | Variable | When needed | Purpose |
 |---|---|---|
+| `VRAM_THRESHOLD` | Change prompt expander selection | Default `32` GiB in these templates. Above the threshold selects HVRAM; at or below selects LVRAM. |
 | `PASSWORD` | Optional | Protects Code Server and pod tools. If not set, a password is automatically generated and shown in the container logs. |
 | `HF_TOKEN` | Gated/private or rate-limited downloads | Hugging Face authentication |
 | `CIVITAI_TOKEN` | Additional CivitAI downloads | Not required for the model files listed here. |
