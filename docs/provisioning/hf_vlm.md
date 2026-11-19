@@ -2,6 +2,7 @@
 
 - [`theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF`](https://huggingface.co/theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF)
 - [`unsloth/Qwen3.8-27B-GGUF`](https://huggingface.co/unsloth/Qwen3.8-27B-GGUF)
+- [`reifnir/Qwen3.8-27B-heretic-GGUF`](https://huggingface.co/reifnir/Qwen3.8-27B-heretic-GGUF)
 - [`TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF`](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF)
 
 ## Heretic Q8_0 GGUF prompt enhancers for qwen image 21
@@ -73,6 +74,26 @@ hf download theresa00l/Qwen3.8-27B-Uncensored-FP8-Q4_K_M-GGUF \
 ```bash
 hf download unsloth/Qwen3.8-27B-GGUF \
   mmproj-F16.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
+```
+
+## MiniMax-H3-Image low-VRAM Heretic IQ3_S and BF16 vision projector
+
+Both public and private MiniMax-H3-Image templates use these files via `HF_MODEL_LVRAM_FILE1/2` at 32 GiB VRAM or below (`VRAM_THRESHOLD=32`). The model and projector are stored together in `models/LLM/Qwen3.8`. Select both files in your llama.cpp loader for image input.
+
+### Heretic 27B RCO IQ3_S
+
+```bash
+hf download reifnir/Qwen3.8-27B-heretic-GGUF \
+  Qwen3.8-27B-heretic-RCO-IQ3_S.gguf \
+  --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
+```
+
+### BF16 vision projector
+
+```bash
+hf download reifnir/Qwen3.8-27B-heretic-GGUF \
+  mmproj-Qwen3.8-27B-heretic-BF16.gguf \
   --local-dir /workspace/ComfyUI/models/LLM/Qwen3.8
 ```
 

@@ -9,7 +9,7 @@ Choose this template to:
 - generate images from text prompts.
 - edit existing images or creating new scenes with multiple references.
 - use the pruned INT8 ConvRot MiniMax-H3-Image model.
-- expand prompts with Qwen3.8-27B-Uncensored or Qwen3-VL-8B-Instruct-Heretic, skills included, selected according to GPU VRAM.
+- expand prompts with Qwen3.8-27B-Uncensored or Qwen3.8-27B-Heretic, skills included, selected according to GPU VRAM.
 
 ## Fast deployment
 
@@ -29,10 +29,11 @@ Choose this template to:
 | GPU VRAM | Selection | Prompt expander | Vision projector |
 |---|---|---|---|
 | Above 32 GiB | HVRAM | Qwen3.8 27B Uncensored Q4_K_M | Qwen3.8 F16 |
-| 32 GiB or below | LVRAM | Qwen3-VL-8B-Instruct-Heretic Q6_K | Qwen3-VL-8B Q8_0 |
+| 32 GiB or below | LVRAM | Qwen3.8 27B Heretic RCO IQ3_S | Qwen3.8 27B Heretic BF16 |
 
-**Both models work on a 24 GB GPU**, but the larger HVRAM model, normally used for video prompts, causes memory swapping.
-The default threshold selects the smaller LVRAM model for a 24 GB GPU.
+Both public and private templates download `Qwen3.8-27B-heretic-RCO-IQ3_S.gguf` and `mmproj-Qwen3.8-27B-heretic-BF16.gguf` from [reifnir/Qwen3.8-27B-heretic-GGUF](https://huggingface.co/reifnir/Qwen3.8-27B-heretic-GGUF) for LVRAM, placing both files in `models/LLM/Qwen3.8`.
+
+The default threshold selects the IQ3_S LVRAM model for a 24 GB GPU. See the [VLM provisioning guide](../docs/provisioning/hf_vlm.md) for manual download commands.
 To choose a different model, change `VRAM_THRESHOLD` in the RunPod template before deployment. For example, on a 24 GB GPU, use `VRAM_THRESHOLD=20` to select HVRAM, or keep `VRAM_THRESHOLD=32` to select LVRAM.
 
 ## Optional configuration
